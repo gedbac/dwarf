@@ -3,6 +3,7 @@
 
 #include "shared/list.h"
 #include "shared/stack.h"
+#include "shared/queue.h"
 #include "shared/comparer.h"
 #include "shared/priority_queue.h"
 
@@ -30,9 +31,19 @@ void print(Stack<int>& stack) {
   }
 }
 
-void print(PriorityQueue<int>& queue){
+void print(PriorityQueue<int>& queue) {
   printf("Priority Queue:\n");
   PriorityQueue<int>::Iterator iterator(queue);
+  while (iterator.HasNext()) {
+    int item = iterator.Next();
+    printf("%i", item);
+    printf("\n");
+  }
+}
+
+void print(Queue<int>& queue) {
+  printf("Queue:\n");
+  Queue<int>::Iterator iterator(queue);
   while (iterator.HasNext()) {
     int item = iterator.Next();
     printf("%i", item);
@@ -43,7 +54,16 @@ void print(PriorityQueue<int>& queue){
 }
 
 int main() {
+  
   printf("Dwarf 2015\n");
+
+  List<int>* list = new List<int>();
+
+  list->Add(1);
+  list->Add(2);
+  print(*list);
+
+  delete list;
 
   Stack<int>* stack = new Stack<int>();
 
@@ -54,35 +74,36 @@ int main() {
 
   delete stack;
 
-  List<int>* list = new List<int>();
-
-  list->Add(1);
-  list->Add(2);
-  print(*list);
-
-  delete list;
-
-  PriorityQueue<int>* queue = new PriorityQueue<int>();
+  Queue<int>* queue = new Queue<int>();
 
   queue->Push(1);
-  print(*queue);
-
-  queue->Push(7);
-  print(*queue);
-
   queue->Push(2);
-  print(*queue);
-
-  queue->Push(9);
-  print(*queue);
-
-  queue->Pop();
-  print(*queue);
-
-  queue->Pop();
+  queue->Push(3);
   print(*queue);
 
   delete queue;
+
+  PriorityQueue<int>* pqueue = new PriorityQueue<int>();
+
+  pqueue->Push(1);
+  print(*pqueue);
+
+  pqueue->Push(7);
+  print(*pqueue);
+
+  pqueue->Push(2);
+  print(*pqueue);
+
+  pqueue->Push(9);
+  print(*pqueue);
+
+  pqueue->Pop();
+  print(*pqueue);
+
+  pqueue->Pop();
+  print(*pqueue);
+
+  delete pqueue;
 
   exit(0);
 }
