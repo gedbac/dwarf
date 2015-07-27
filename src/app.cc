@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "shared/list.h"
+#include "shared/stack.h"
 #include "shared/comparer.h"
 #include "shared/priority_queue.h"
 
@@ -12,6 +13,16 @@ using namespace dwarf::shared;
 void print(List<int>& list) {
   printf("List:\n");
   List<int>::Iterator iterator(list);
+  while (iterator.HasNext()) {
+    int item = iterator.Next();
+    printf("%i", item);
+    printf("\n");
+  }
+}
+
+void print(Stack<int>& stack) {
+  printf("Stack:\n");
+  Stack<int>::Iterator iterator(stack);
   while (iterator.HasNext()) {
     int item = iterator.Next();
     printf("%i", item);
@@ -33,6 +44,15 @@ void print(PriorityQueue<int>& queue){
 
 int main() {
   printf("Dwarf 2015\n");
+
+  Stack<int>* stack = new Stack<int>();
+
+  stack->Push(1);
+  stack->Push(2);
+  stack->Push(3);
+  print(*stack);
+
+  delete stack;
 
   List<int>* list = new List<int>();
 
