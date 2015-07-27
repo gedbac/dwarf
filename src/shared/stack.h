@@ -43,7 +43,6 @@ class Stack {
     void Initialize(int capacity);
     void Cleanup(TItem* data);
     void Resize(int new_capacity);
-
 };
 
 template <typename TItem>
