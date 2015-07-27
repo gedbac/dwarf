@@ -1,5 +1,5 @@
-#ifndef DWARF_SHARED_COMPARER
-#define DWARF_SHARED_COMPARER
+#ifndef DWARF_SHARED_COMPARER_H_
+#define DWARF_SHARED_COMPARER_H_
 
 namespace dwarf {
 namespace shared {

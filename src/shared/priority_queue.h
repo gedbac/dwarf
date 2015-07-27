@@ -1,5 +1,5 @@
-#ifndef DWARF_SHARED_PRIORITY_QUEUE
-#define DWARF_SHARED_PRIORITY_QUEUE
+#ifndef DWARF_SHARED_PRIORITY_QUEUE_H_
+#define DWARF_SHARED_PRIORITY_QUEUE_H_
 
 #include <string.h>
 #include <assert.h>

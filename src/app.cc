@@ -1,23 +1,46 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "shared/list.h"
 #include "shared/comparer.h"
 #include "shared/priority_queue.h"
 
+namespace {
+
 using namespace dwarf::shared;
 
-void print(PriorityQueue<int>& queue){
-  printf("Priority Queue:\n");
-  PriorityQueue<int>::Iterator pqueueIterator(queue);
-  while (pqueueIterator.HasNext()) {
-    int item = pqueueIterator.Next();
+void print(List<int>& list) {
+  printf("List:\n");
+  List<int>::Iterator iterator(list);
+  while (iterator.HasNext()) {
+    int item = iterator.Next();
     printf("%i", item);
     printf("\n");
   }
 }
 
+void print(PriorityQueue<int>& queue){
+  printf("Priority Queue:\n");
+  PriorityQueue<int>::Iterator iterator(queue);
+  while (iterator.HasNext()) {
+    int item = iterator.Next();
+    printf("%i", item);
+    printf("\n");
+  }
+}
+
+}
+
 int main() {
   printf("Dwarf 2015\n");
+
+  List<int>* list = new List<int>();
+
+  list->Add(1);
+  list->Add(2);
+  print(*list);
+
+  delete list;
 
   PriorityQueue<int>* queue = new PriorityQueue<int>();
 
