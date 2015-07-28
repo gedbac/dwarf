@@ -6,6 +6,9 @@
 #include "shared/queue.h"
 #include "shared/comparer.h"
 #include "shared/priority_queue.h"
+#include "shared/graph_node.h"
+#include "shared/graph_edge.h"
+#include "shared/graph.h"
 
 namespace {
 
@@ -51,10 +54,26 @@ void print(Queue<int>& queue) {
   }
 }
 
+void print(Graph<GraphNode, GraphEdge>& graph) {
+  printf("Graph:\n");
+  Graph<GraphNode, GraphEdge>::NodeIterator nodeIterator(graph);
+  while (nodeIterator.HasNext()) {
+    GraphNode& node = nodeIterator.Next();
+    printf("%i", node.index());
+    Graph<GraphNode, GraphEdge>::EdgeIterator edgeIterator(graph, node.index());
+    while (edgeIterator.HasNext()) {
+      GraphEdge& edge = edgeIterator.Next();
+      printf("->%i", edge.to());
+    }
+    printf("\n");
+  }
+  printf("Nodes: %i Edges: %i \n", graph.NodeCount(), graph.EdgeCount());
+}
+
 }
 
 int main() {
-  
+
   printf("Dwarf 2015\n");
 
   List<int>* list = new List<int>();
@@ -104,6 +123,26 @@ int main() {
   print(*pqueue);
 
   delete pqueue;
+
+  Graph<GraphNode,GraphEdge>* graph = new Graph<GraphNode,GraphEdge>();
+
+  graph->CreateNode(0);
+  graph->CreateNode(1);
+  graph->CreateNode(2);
+  graph->CreateNode(3);
+  graph->CreateNode(4);
+  graph->CreateNode(5);
+  graph->CreateEdge(0, 1);
+  graph->CreateEdge(0, 2);
+  graph->CreateEdge(1, 4);
+  graph->CreateEdge(2, 3);
+  graph->CreateEdge(3, 4);
+  graph->CreateEdge(3, 5);
+  graph->CreateEdge(4, 5);
+
+  print(*graph);
+
+  delete graph;
 
   exit(0);
 }
