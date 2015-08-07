@@ -1,14 +1,14 @@
 #ifndef DWARF_SHARED_PRIORITY_QUEUE_H_
 #define DWARF_SHARED_PRIORITY_QUEUE_H_
 
+namespace dwarf {
+namespace shared {
+
 #include <string.h>
 #include <assert.h>
 #include <math.h>
 
 #include "comparer.h"
-
-namespace dwarf {
-namespace shared {
 
 template <typename TItem>
 class PriorityQueue {
@@ -68,7 +68,9 @@ inline PriorityQueue<TItem>::PriorityQueue(int capacity, const Comparer<TItem>& 
 }
 
 template <typename TItem>
-inline PriorityQueue<TItem>::~PriorityQueue() {}
+inline PriorityQueue<TItem>::~PriorityQueue() {
+  Cleanup(heap_);
+}
 
 template <typename TItem>
 inline int PriorityQueue<TItem>::capacity() const {

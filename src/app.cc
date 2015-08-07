@@ -6,6 +6,7 @@
 #include "shared/queue.h"
 #include "shared/comparer.h"
 #include "shared/priority_queue.h"
+#include "shared/indexed_priority_queue.h"
 #include "shared/graph_node.h"
 #include "shared/graph_edge.h"
 #include "shared/graph.h"
@@ -34,6 +35,16 @@ void print(Stack<int>& stack) {
   }
 }
 
+void print(Queue<int>& queue) {
+  printf("Queue:\n");
+  Queue<int>::Iterator iterator(queue);
+  while (iterator.HasNext()) {
+    int item = iterator.Next();
+    printf("%i", item);
+    printf("\n");
+  }
+}
+
 void print(PriorityQueue<int>& queue) {
   printf("Priority Queue:\n");
   PriorityQueue<int>::Iterator iterator(queue);
@@ -44,9 +55,9 @@ void print(PriorityQueue<int>& queue) {
   }
 }
 
-void print(Queue<int>& queue) {
-  printf("Queue:\n");
-  Queue<int>::Iterator iterator(queue);
+void print(IndexedPriorityQueue<int>& queue) {
+  printf("Indexed Priority Queue:\n");
+  IndexedPriorityQueue<int>::Iterator iterator(queue);
   while (iterator.HasNext()) {
     int item = iterator.Next();
     printf("%i", item);
@@ -123,6 +134,28 @@ int main() {
   print(*pqueue);
 
   delete pqueue;
+
+  IndexedPriorityQueue<int>* ipqueue = new IndexedPriorityQueue<int>();
+
+  ipqueue->Push(0, 1);
+  print(*ipqueue);
+
+  ipqueue->Push(1, 7);
+  print(*ipqueue);
+
+  ipqueue->Push(2, 2);
+  print(*ipqueue);
+
+  ipqueue->Push(3, 9);
+  print(*ipqueue);
+
+  ipqueue->Pop();
+  print(*ipqueue);
+
+  ipqueue->Pop();
+  print(*ipqueue);
+
+  delete ipqueue;
 
   Graph<GraphNode,GraphEdge>* graph = new Graph<GraphNode,GraphEdge>();
 
