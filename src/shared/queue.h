@@ -1,10 +1,10 @@
 #ifndef DWARF_SHARED_QUEUE_H_
 #define DWARF_SHARED_QUEUE_H_
 
+#include <assert.h>
+
 namespace dwarf {
 namespace shared {
-
-#include <assert.h>
 
 template <typename TItem>
 class Queue {

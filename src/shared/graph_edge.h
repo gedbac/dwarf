@@ -10,7 +10,7 @@ class GraphEdge {
     ~GraphEdge();
     int from() const;
     int to() const;
-	double cost() const;
+	  double cost() const;
     void set_cost(double cost);
 
   private:

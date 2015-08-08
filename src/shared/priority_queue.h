@@ -8,8 +8,6 @@ namespace shared {
 #include <assert.h>
 #include <math.h>
 
-#include "comparer.h"
-
 template <typename TItem>
 class PriorityQueue {
   public:

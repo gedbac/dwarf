@@ -1,14 +1,12 @@
 #ifndef DWARF_SHARED_INDEXED_PRIORITY_QUEUE_H_
 #define DWARF_SHARED_INDEXED_PRIORITY_QUEUE_H_
 
-namespace dwarf {
-namespace shared {
-
 #include <string.h>
 #include <assert.h>
 #include <math.h>
 
-#include "comparer.h"
+namespace dwarf {
+namespace shared {
 
 template <typename TItem>
 class IndexedPriorityQueue {

@@ -1,11 +1,11 @@
 #ifndef DWARF_SHARED_STACK_H_
 #define DWARF_SHARED_STACK_H_
 
-namespace dwarf {
-namespace shared {
-
 #include <string.h>
 #include <assert.h>
+
+namespace dwarf {
+namespace shared {
 
 template <typename TItem>
 class Stack {
