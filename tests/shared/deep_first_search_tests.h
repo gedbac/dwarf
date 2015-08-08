@@ -1,8 +1,6 @@
 #ifndef DWARF_TESTS_SHARED_DEEP_FIRST_SEARCH_TESTS_H_
 #define DWARF_TESTS_SHARED_DEEP_FIRST_SEARCH_TESTS_H_
 
-#include <assert.h>
-
 #include "../../src/shared/graph_node.h"
 #include "../../src/shared/graph_edge.h"
 #include "../../src/shared/graph.h"
@@ -44,7 +42,9 @@ void should_find_path_using_dfs() {
     }
     printf("\n");
   }
-  assert(dfs->found() && "path not found");
+  
+  ASSERT("Should find path using dfs", dfs->found());
+
   delete dfs;
   delete graph;
 }

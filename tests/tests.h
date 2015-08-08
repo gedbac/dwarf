@@ -1,6 +1,8 @@
 #ifndef DWARF_TESTS_TESTS_H_
 #define DWARF_TESTS_TESTS_H_
 
+#include "./tinytest.h"
+
 #include "../src/shared/list.h"
 #include "../src/shared/stack.h"
 #include "../src/shared/queue.h"
@@ -177,7 +179,8 @@ void runAllTests() {
 
   delete graph;
 
-  dwarf::tests::shared::should_find_path_using_dfs();
+  RUN(dwarf::tests::shared::should_find_path_using_dfs);
+  TEST_REPORT();
 }
 
 }
