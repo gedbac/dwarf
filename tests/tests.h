@@ -14,8 +14,10 @@
 #include "../src/shared/graph.h"
 #include "../src/shared/graph_search.h"
 #include "../src/shared/deep_first_search.h"
+#include "../src/shared/breadth_first_search.h"
 
 #include "./shared/deep_first_search_tests.h"
+#include "./shared/breadth_first_search_tests.h"
 
 namespace dwarf {
 namespace tests {
@@ -180,6 +182,8 @@ void runAllTests() {
   delete graph;
 
   RUN(dwarf::tests::shared::should_find_path_using_dfs);
+  RUN(dwarf::tests::shared::should_find_path_using_bfs);
+
   TEST_REPORT();
 }
 

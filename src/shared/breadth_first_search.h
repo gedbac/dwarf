@@ -1,14 +1,14 @@
-#ifndef DWARF_SHARED_DEEP_FIRST_SEARCH_H_
-#define DWARF_SHARED_DEEP_FIRST_SEARCH_H_
+#ifndef DWARF_SHARED_BREADTH_FIRST_SEARCH_H_
+#define DWARF_SHARED_BREADTH_FIRST_SEARCH_H_
 
 namespace dwarf {
 namespace shared {
 
 template <typename TGraph>
-class DeepFirstSearch : public GraphSearch {
+class BreadthFirstSearch : public GraphSearch {
   public:
-  	DeepFirstSearch(const TGraph& graph);
-	  virtual ~DeepFirstSearch();
+    BreadthFirstSearch(const TGraph& graph);
+	  virtual ~BreadthFirstSearch();
     virtual bool found() const;
   	virtual int source() const;
     virtual void set_source(int source);
@@ -22,70 +22,70 @@ class DeepFirstSearch : public GraphSearch {
     typedef typename TGraph::EdgeType Edge;
     typedef typename TGraph::EdgeIterator GraphEdgeIterator;
     enum { VISITED, UNVISITED, NO_PARENT_ASSIGNED };
-	  const TGraph& graph_;
+	const TGraph& graph_;
     bool found_;
     int source_;
     int target_;
     List<int>* visited_;
     List<int>* route_;
     List<int>* path_;
-    Stack<const Edge*>* stack_;
+    Queue<const Edge*>* queue_;
     void Initialize();
-    void Cleanup(List<int>* visited, List<int>* route, List<int>* path, Stack<const Edge*>* stack);
-    void PushUnvisitedEdgesToStack(int index);
+    void Cleanup(List<int>* visited, List<int>* route, List<int>* path, Queue<const Edge*>* queue);
+    void PushUnvisitedEdgesToQueue(int index);
 };
 
 template <typename TGraph>
-inline DeepFirstSearch<TGraph>::DeepFirstSearch(const TGraph& graph)
+inline BreadthFirstSearch<TGraph>::BreadthFirstSearch(const TGraph& graph)
     : graph_(graph),
       found_(false) {
   Initialize();
 }
 
 template <typename TGraph>
-inline DeepFirstSearch<TGraph>::~DeepFirstSearch() {
-  Cleanup(visited_, route_, path_, stack_);
+inline BreadthFirstSearch<TGraph>::~BreadthFirstSearch() {
+  Cleanup(visited_, route_, path_, queue_);
 }
 
 template <typename TGraph>
-inline bool DeepFirstSearch<TGraph>::found() const {
+inline bool BreadthFirstSearch<TGraph>::found() const {
   return found_;
 }
 
 template <typename TGraph>
-inline int DeepFirstSearch<TGraph>::source() const {
+inline int BreadthFirstSearch<TGraph>::source() const {
   return source_;
 }
 
 template <typename TGraph>
-inline void DeepFirstSearch<TGraph>::set_source(int source) {
+inline void BreadthFirstSearch<TGraph>::set_source(int source) {
   source_ = source;
 }
 
 template <typename TGraph>
-inline int DeepFirstSearch<TGraph>::target() const {
+inline int BreadthFirstSearch<TGraph>::target() const {
   return target_;
 }
 
 template <typename TGraph>
-inline void DeepFirstSearch<TGraph>::set_target(int target) {
+inline void BreadthFirstSearch<TGraph>::set_target(int target) {
   target_ = target;
 }
 
 template <typename TGraph>
-inline bool DeepFirstSearch<TGraph>::Find() {
+inline bool BreadthFirstSearch<TGraph>::Find() {
   if (graph_.HasNode(source_) && graph_.HasNode(target_)) {
     const Edge* edge;
-    PushUnvisitedEdgesToStack(source_);
-    while (!stack_->IsEmpty()) {
-      edge = stack_->Pop();
+    visited_->Set(source_, VISITED);
+    PushUnvisitedEdgesToQueue(source_);
+    while (!queue_->IsEmpty()) {
+      edge = queue_->Pop();
       route_->Set(edge->to(), edge->from());
-      visited_->Set(edge->to(), VISITED);
       if (edge->to() == target_) {
         found_ = true;
         break;
       } else {
-        PushUnvisitedEdgesToStack(edge->to());
+        PushUnvisitedEdgesToQueue(edge->to());
       }
     }
     if (found_) {
@@ -101,12 +101,12 @@ inline bool DeepFirstSearch<TGraph>::Find() {
 }
 
 template <typename TGraph>
-inline const List<int>& DeepFirstSearch<TGraph>::GetPath() const {
+inline const List<int>& BreadthFirstSearch<TGraph>::GetPath() const {
   return *path_;
 }
 
 template <typename TGraph>
-inline void DeepFirstSearch<TGraph>::Initialize() {
+inline void BreadthFirstSearch<TGraph>::Initialize() {
   int nodeCount = graph_.NodeCount();
   visited_ = new List<int>(nodeCount);
   for (int i = 0; i < nodeCount; ++i) {
@@ -118,25 +118,26 @@ inline void DeepFirstSearch<TGraph>::Initialize() {
   }
   path_ = new List<int>(nodeCount);
   int edgeCount = graph_.EdgeCount();
-  stack_ = new Stack<const Edge*>(edgeCount);
+  queue_ = new Queue<const Edge*>(edgeCount);
 }
 
 template <typename TGraph>
-inline void DeepFirstSearch<TGraph>::Cleanup(List<int>* visited,
-  List<int>* route, List<int>* path, Stack<const Edge*>* stack) {
+inline void BreadthFirstSearch<TGraph>::Cleanup(List<int>* visited,
+  List<int>* route, List<int>* path, Queue<const Edge*>* queue) {
   delete visited;
   delete route;
   delete path;
-  delete stack;
+  delete queue;
 }
 
 template <typename TGraph>
-inline void DeepFirstSearch<TGraph>::PushUnvisitedEdgesToStack(int index) {
+inline void BreadthFirstSearch<TGraph>::PushUnvisitedEdgesToQueue(int index) {
   GraphEdgeIterator iterator(graph_, index);
   while (iterator.HasNext()) {
     Edge& edge = iterator.Next();
     if (visited_->Get(edge.to()) == UNVISITED) {
-      stack_->Push(&edge);
+      queue_->Push(&edge);
+      visited_->Set(edge.to(), VISITED);
     }
   }
 }
