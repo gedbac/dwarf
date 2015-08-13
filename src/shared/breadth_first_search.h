@@ -1,6 +1,9 @@
 #ifndef DWARF_SHARED_BREADTH_FIRST_SEARCH_H_
 #define DWARF_SHARED_BREADTH_FIRST_SEARCH_H_
 
+#include "list.h"
+#include "queue.h"
+
 namespace dwarf {
 namespace shared {
 

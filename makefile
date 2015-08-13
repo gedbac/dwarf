@@ -1,12 +1,12 @@
-# Variables
 # Compiler:
 CC = g++
 
 # Compiler options:
-#   -Wall  - this enables all the warnings
-#   -g     - produce debugging information
-#   -O0    - reduce compilation time and make debugging produce the expected results
-CFLAGS = -Wall -g -O0
+#   -Wall    - this enables all the warnings
+#   -g       - produce debugging information
+#   -O0      - reduce compilation time and make debugging produce the expected results
+#   -D name  - predefine name as a macro
+CFLAGS = -Wall -g -O0 -D DEBUG
 
 # List of modules
 MODULES = shared

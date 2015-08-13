@@ -1,8 +1,6 @@
 #ifndef DWARF_TESTS_TESTS_H_
 #define DWARF_TESTS_TESTS_H_
 
-#include "./tinytest.h"
-
 #include "../src/shared/list.h"
 #include "../src/shared/stack.h"
 #include "../src/shared/queue.h"
@@ -15,9 +13,6 @@
 #include "../src/shared/graph_search.h"
 #include "../src/shared/deep_first_search.h"
 #include "../src/shared/breadth_first_search.h"
-
-#include "./shared/deep_first_search_tests.h"
-#include "./shared/breadth_first_search_tests.h"
 
 namespace dwarf {
 namespace tests {
@@ -180,11 +175,6 @@ void runAllTests() {
   print(*graph);
 
   delete graph;
-
-  RUN(dwarf::tests::shared::should_find_path_using_dfs);
-  RUN(dwarf::tests::shared::should_find_path_using_bfs);
-
-  TEST_REPORT();
 }
 
 }

@@ -1,6 +1,10 @@
 #ifndef DWARF_SHARED_DEEP_FIRST_SEARCH_H_
 #define DWARF_SHARED_DEEP_FIRST_SEARCH_H_
 
+#include "graph_search.h"
+#include "list.h"
+#include "stack.h"
+
 namespace dwarf {
 namespace shared {
 

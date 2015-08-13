@@ -1,16 +1,11 @@
-#ifndef DWARF_TESTS_SHARED_BREADTH_FIRST_SEARCH_TESTS_H_
-#define DWARF_TESTS_SHARED_BREADTH_FIRST_SEARCH_TESTS_H_
-
-namespace dwarf {
-namespace tests {
-namespace shared {
+#include "../unit_tests.h"
 
 #include "../../src/shared/graph_node.h"
 #include "../../src/shared/graph_edge.h"
 #include "../../src/shared/graph.h"
 #include "../../src/shared/breadth_first_search.h"
 
-void should_find_path_using_bfs() {
+TEST(ShouldFindPathUsingBFS) {
 
   using namespace dwarf::shared;
 
@@ -35,6 +30,7 @@ void should_find_path_using_bfs() {
   bfs->set_source(4);
   bfs->set_target(1);
   if (bfs->Find()) {
+#ifdef DEBUG
     printf("BFS: ");
     const List<int>& path = bfs->GetPath();
     List<int>::Iterator iterator(path);
@@ -42,16 +38,11 @@ void should_find_path_using_bfs() {
       printf("%i ", iterator.Next());
     }
     printf("\n");
+#endif
   }
 
-  ASSERT("Should find path using bfs", bfs->found());
+  ASSERT(bfs->found());
 
   delete bfs;
   delete graph;
 }
-
-}
-}
-}
-
-#endif

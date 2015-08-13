@@ -1,6 +1,8 @@
 #ifndef DWARF_SHARED_GRAPH_SEARCH_H_
 #define DWARF_SHARED_GRAPH_SEARCH_H_
 
+#include "list.h"
+
 namespace dwarf {
 namespace shared {
 
