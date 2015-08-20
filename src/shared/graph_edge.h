@@ -7,7 +7,8 @@ namespace shared {
 class GraphEdge {
   public:
     GraphEdge(int from, int to);
-    ~GraphEdge();
+    GraphEdge(int from, int to, double cost);
+    virtual ~GraphEdge();
     int from() const;
     int to() const;
 	  double cost() const;
@@ -22,11 +23,14 @@ class GraphEdge {
 inline GraphEdge::GraphEdge(int from, int to)
     : from_(from),
       to_(to),
-	  cost_(1.0) {
-}
+	    cost_(1.0) {}
 
-inline GraphEdge::~GraphEdge() {
-}
+inline GraphEdge::GraphEdge(int from, int to, double cost)
+    : from_(from),
+      to_(to),
+      cost_(cost) {}
+
+inline GraphEdge::~GraphEdge() {}
 
 inline int GraphEdge::from() const {
   return from_;

@@ -1,3 +1,6 @@
+#ifndef DWARF_TESTS_SHARED_DEEP_FIRST_SEARCH_H_
+#define DWARF_TESTS_SHARED_DEEP_FIRST_SEARCH_H_
+
 #include "../unit_tests.h"
 
 #include "../../src/shared/deep_first_search.h"
@@ -5,13 +8,28 @@
 #include "../../src/shared/graph_node.h"
 #include "../../src/shared/graph_edge.h"
 
-TEST(ShouldFindPathUsingDFS) {
+namespace dwarf {
+namespace tests {
+namespace shared {
 
-  using namespace dwarf::shared;
+using namespace dwarf::shared;
 
-  typedef Graph<GraphNode,GraphEdge> Graph;
+void print(DeepFirstSearch<Graph<GraphNode,GraphEdge> >& dfs) {
+#ifdef DEBUG
+    printf("DFS: ");
+    const List<int>& path = dfs.GetPath();
+    List<int>::Iterator iterator(path);
+    while (iterator.HasNext()) {
+      printf("%i ", iterator.Next());
+    }
+    printf("\n");
+#endif
+}
 
-  Graph* graph = new Graph();
+TEST(should_find_path_using_dfs) {
+
+  Graph<GraphNode,GraphEdge>* graph = new Graph<GraphNode,GraphEdge>();
+
   graph->CreateNode(0);
   graph->CreateNode(1);
   graph->CreateNode(2);
@@ -26,19 +44,11 @@ TEST(ShouldFindPathUsingDFS) {
   graph->CreateEdge(3, 5);
   graph->CreateEdge(4, 5);
 
-  DeepFirstSearch<Graph>* dfs = new DeepFirstSearch<Graph>(*graph);
+  DeepFirstSearch<Graph<GraphNode,GraphEdge> >* dfs = new DeepFirstSearch<Graph<GraphNode,GraphEdge> >(*graph);
   dfs->set_source(4);
   dfs->set_target(1);
   if (dfs->Find()) {
-#ifdef DEBUG
-    printf("DFS: ");
-    const List<int>& path = dfs->GetPath();
-    List<int>::Iterator iterator(path);
-    while (iterator.HasNext()) {
-      printf("%i ", iterator.Next());
-    }
-    printf("\n");
-#endif
+    print(*dfs);
   }
 
   ASSERT(dfs->found());
@@ -46,3 +56,9 @@ TEST(ShouldFindPathUsingDFS) {
   delete dfs;
   delete graph;
 }
+
+}
+}
+}
+
+#endif

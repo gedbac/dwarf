@@ -1,6 +1,8 @@
 #ifndef DWARF_SHARED_PRIORITY_QUEUE_H_
 #define DWARF_SHARED_PRIORITY_QUEUE_H_
 
+#include "comparer.h"
+
 namespace dwarf {
 namespace shared {
 

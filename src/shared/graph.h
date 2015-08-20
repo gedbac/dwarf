@@ -1,6 +1,8 @@
 #ifndef DWARF_SHARED_GRAPH_H_
 #define DWARF_SHARED_GRAPH_H_
 
+#include "list.h"
+
 namespace dwarf {
 namespace shared {
 
@@ -28,6 +30,7 @@ class Graph {
     void RemoveNode(int index);
     int NodeCount() const;
     TEdge& CreateEdge(int from, int to);
+    TEdge& CreateEdge(int from, int to, double cost);
     TEdge& GetEdge(int from, int to) const;
     bool HasEdge(int from, int to) const;
     void RemoveEdge(int from, int to);
@@ -220,6 +223,22 @@ inline TEdge& Graph<TNode,TEdge>::CreateEdge(int from, int to) {
   if (!digraph_) {
     node_edges = edges_->Get(to);
     edge = new TEdge(to, from);
+    node_edges->Add(edge);
+  }
+  return *edge;
+}
+
+template <typename TNode, typename TEdge>
+inline TEdge& Graph<TNode,TEdge>::CreateEdge(int from, int to, double cost) {
+  assert(from >= 0 && from < nodes_->length() && "node's 'from' index is invalid");
+  assert(to >= 0 && to < nodes_->length() && "node's 'to' index is invalid");
+  assert(!HasEdge(from, to) && "attempting to add a dublicate edge");
+  TEdge* edge = new TEdge(from, to, cost);
+  NodeEdgeList* node_edges = edges_->Get(from);
+  node_edges->Add(edge);
+  if (!digraph_) {
+    node_edges = edges_->Get(to);
+    edge = new TEdge(to, from, cost);
     node_edges->Add(edge);
   }
   return *edge;

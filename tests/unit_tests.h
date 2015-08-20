@@ -15,6 +15,9 @@
   TestRegistration t_##name (Test(#name, &name)); \
   void name()
 
+#define SKIP_TEST(name) \
+  void name()
+
 typedef void(*TestFunc)();
 
 struct Test {

@@ -7,7 +7,7 @@ namespace shared {
 class GraphNode {
   public:
     GraphNode(int index);
-    ~GraphNode();
+    virtual ~GraphNode();
     int index() const;
 
   private:
@@ -15,11 +15,9 @@ class GraphNode {
 };
 
 inline GraphNode::GraphNode(int index)
-    : index_(index) {
-}
+    : index_(index) {}
 
-inline GraphNode::~GraphNode() {
-}
+inline GraphNode::~GraphNode() {}
 
 inline int GraphNode::index() const {
   return index_;

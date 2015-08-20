@@ -32,15 +32,15 @@ template <typename TItem>
 inline int Comparer<TItem>::Compare(TItem& a, TItem& b) const {
   if (!inverse_) {
     if (a < b) {
-      return -1;
-    } else if (a > b) {
       return 1;
+    } else if (a > b) {
+      return -1;
     }
   } else {
     if (a > b) {
-      return -1;
-    } else if (a < b) {
       return 1;
+    } else if (a < b) {
+      return -1;
     }
   }
   return 0;

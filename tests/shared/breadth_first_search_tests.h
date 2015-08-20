@@ -1,3 +1,6 @@
+#ifndef DWARF_TESTS_SHARED_BREADTH_FIRST_SEARCH_H_
+#define DWARF_TESTS_SHARED_BREADTH_FIRST_SEARCH_H_
+
 #include "../unit_tests.h"
 
 #include "../../src/shared/graph_node.h"
@@ -5,13 +8,27 @@
 #include "../../src/shared/graph.h"
 #include "../../src/shared/breadth_first_search.h"
 
-TEST(ShouldFindPathUsingBFS) {
+namespace dwarf {
+namespace tests {
+namespace shared {
 
-  using namespace dwarf::shared;
+using namespace dwarf::shared;
 
-  typedef Graph<GraphNode,GraphEdge> Graph;
+void print(BreadthFirstSearch<Graph<GraphNode,GraphEdge> >& bfs) {
+#ifdef DEBUG
+    printf("BFS: ");
+    const List<int>& path = bfs.GetPath();
+    List<int>::Iterator iterator(path);
+    while (iterator.HasNext()) {
+      printf("%i ", iterator.Next());
+    }
+    printf("\n");
+#endif
+}
 
-  Graph* graph = new Graph();
+TEST(should_find_path_using_bfs) {
+
+  Graph<GraphNode,GraphEdge>* graph = new Graph<GraphNode,GraphEdge>();
   graph->CreateNode(0);
   graph->CreateNode(1);
   graph->CreateNode(2);
@@ -26,19 +43,11 @@ TEST(ShouldFindPathUsingBFS) {
   graph->CreateEdge(3, 5);
   graph->CreateEdge(4, 5);
 
-  BreadthFirstSearch<Graph>* bfs = new BreadthFirstSearch<Graph>(*graph);
+  BreadthFirstSearch<Graph<GraphNode,GraphEdge> >* bfs = new BreadthFirstSearch<Graph<GraphNode,GraphEdge> >(*graph);
   bfs->set_source(4);
   bfs->set_target(1);
   if (bfs->Find()) {
-#ifdef DEBUG
-    printf("BFS: ");
-    const List<int>& path = bfs->GetPath();
-    List<int>::Iterator iterator(path);
-    while (iterator.HasNext()) {
-      printf("%i ", iterator.Next());
-    }
-    printf("\n");
-#endif
+    print(*bfs);
   }
 
   ASSERT(bfs->found());
@@ -46,3 +55,9 @@ TEST(ShouldFindPathUsingBFS) {
   delete bfs;
   delete graph;
 }
+
+}
+}
+}
+
+#endif

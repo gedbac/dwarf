@@ -16,6 +16,7 @@ class GraphSearch {
 	virtual void set_target(int target) = 0;
     virtual bool Find() = 0;
 	virtual const List<int>& GetPath() const = 0;
+	// TODO: method 'Clear' has to be added
 };
 
 inline GraphSearch::~GraphSearch() {}

@@ -26,12 +26,15 @@ $1/%.o: %.cc
 	$(CC) $(CFLAGS) $(INCLUDES) -c $$< -o $$@
 endef
 
-.PHONY: all checkdirs clean
+.PHONY: build checkdirs clean dwarf
 
-all: clean checkdirs bin/app
+build: clean checkdirs bin/dwarf bin/test_runner
 
-bin/app: $(OBJ)
-	$(CC) $(CFLAGS) $^ src/app.cc -o $@
+bin/dwarf: $(OBJ)
+	$(CC) $(CFLAGS) $^ src/dwarf.cc -o $@
+
+bin/test_runner: $(OBJ)
+	$(CC) $(CFLAGS) $^ tests/test_runner.cc -o $@
 
 checkdirs: $(BUILD_DIR)
 
@@ -40,5 +43,11 @@ $(BUILD_DIR):
 
 clean:
 	@rm -rf $(BUILD_DIR)
+
+dwarf:
+	./bin/dwarf
+
+test:
+	./bin/test_runner
 
 $(foreach bdir,$(BUILD_DIR),$(eval $(call link,$(bdir))))

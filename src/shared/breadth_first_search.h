@@ -25,7 +25,7 @@ class BreadthFirstSearch : public GraphSearch {
     typedef typename TGraph::EdgeType Edge;
     typedef typename TGraph::EdgeIterator GraphEdgeIterator;
     enum { VISITED, UNVISITED, NO_PARENT_ASSIGNED };
-	const TGraph& graph_;
+	  const TGraph& graph_;
     bool found_;
     int source_;
     int target_;

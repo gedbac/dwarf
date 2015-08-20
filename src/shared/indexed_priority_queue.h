@@ -5,6 +5,8 @@
 #include <assert.h>
 #include <math.h>
 
+#include "comparer.h"
+
 namespace dwarf {
 namespace shared {
 
@@ -14,15 +16,15 @@ class IndexedPriorityQueue {
     typedef TItem ItemType;
 	  IndexedPriorityQueue(const Comparer<TItem>& comparer = Comparer<TItem>());
 	  IndexedPriorityQueue(int capacity, const Comparer<TItem>& comparer = Comparer<TItem>());
-	  ~IndexedPriorityQueue();
+    ~IndexedPriorityQueue();
 	  int capacity() const;
     int length() const;
     bool IsEmpty() const;
     void Clear();
     void Push(int index, TItem item);
-    TItem Pop();
-    TItem Peek();
-    void Change(int index);
+    int Pop();
+    int Peek();
+    void Change(int index, TItem item);
     TItem& operator[] (int index) const;
 
     class Iterator {
@@ -30,7 +32,7 @@ class IndexedPriorityQueue {
         Iterator(const IndexedPriorityQueue<TItem>& queue);
         ~Iterator();
         bool HasNext() const;
-        TItem Next();
+        int Next();
 
       private:
         int position_;
@@ -97,11 +99,15 @@ inline void IndexedPriorityQueue<TItem>::Clear() {
 
 template <typename TItem>
 inline void IndexedPriorityQueue<TItem>::Push(int index, TItem item) {
+  int new_capacity = 0;
   if (length_ == capacity_) {
-    int new_capacity = 2 * capacity_ + 1;
+    new_capacity = 2 * capacity_ + 1;
     Resize(new_capacity);
   }
-  assert(index >= 0 && index <= length_ && "index out of range");
+  if (index >= capacity_) {
+    new_capacity = index + 1;
+    Resize(new_capacity);
+  }
   data_[index] = item;
   heap_[length_] = index;
   inverse_heap_[index] = length_;
@@ -112,26 +118,27 @@ inline void IndexedPriorityQueue<TItem>::Push(int index, TItem item) {
 }
 
 template <typename TItem>
-inline TItem IndexedPriorityQueue<TItem>::Pop() {
+inline int IndexedPriorityQueue<TItem>::Pop() {
   assert(length_ > 0 && "queue is empty");
-  TItem item = data_[heap_[0]];
+  int index = heap_[0];
   length_--;
-  if (length_ > 1) {
+  if (length_ > 0) {
     Swap(0, length_);
     ShiftDown(0);
   }
-  return item;
+  return index;
 }
 
 template <typename TItem>
-inline TItem IndexedPriorityQueue<TItem>::Peek() {
+inline int IndexedPriorityQueue<TItem>::Peek() {
   assert(length_ > 0 && "queue is empty");
-  return data_[heap_[0]];
+  return heap_[0];
 }
 
 template <typename TItem>
-inline void IndexedPriorityQueue<TItem>::Change(int index) {
-  assert(index >= 0 && index < length_ && "index out of range");
+inline void IndexedPriorityQueue<TItem>::Change(int index, TItem item) {
+  assert(index >= 0 && index < capacity_ && "index out of range");
+  data_[index] = item;
   ShiftUp(inverse_heap_[index]);
   ShiftDown(inverse_heap_[index]);
 }
@@ -232,8 +239,8 @@ inline bool IndexedPriorityQueue<TItem>::Iterator::HasNext() const {
 }
 
 template <typename TItem>
-inline TItem IndexedPriorityQueue<TItem>::Iterator::Next() {
-  return queue_.data_[queue_.heap_[position_++]];
+inline int IndexedPriorityQueue<TItem>::Iterator::Next() {
+  return queue_.heap_[position_++];
 }
 
 }
