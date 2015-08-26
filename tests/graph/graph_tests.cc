@@ -1,19 +1,12 @@
-#ifndef DWARF_TESTS_SHARED_GRAPH_H_
-#define DWARF_TESTS_SHARED_GRAPH_H_
-
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../unit_tests.h"
-#include "../../src/shared/graph.h"
-#include "../../src/shared/graph_node.h"
-#include "../../src/shared/graph_edge.h"
+#include "unit_tests.h"
+#include "graph.h"
+#include "graph_node.h"
+#include "graph_edge.h"
 
-namespace dwarf {
-namespace tests {
-namespace shared {
-
-using namespace dwarf::shared;
+using namespace dwarf;
 
 void print(Graph<GraphNode, GraphEdge>& graph) {
 #ifdef DEBUG
@@ -59,9 +52,3 @@ TEST(should_create_graph) {
   delete graph;
 
 }
-
-}
-}
-}
-
-#endif

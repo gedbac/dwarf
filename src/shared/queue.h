@@ -4,7 +4,6 @@
 #include <assert.h>
 
 namespace dwarf {
-namespace shared {
 
 template <typename TItem>
 class Queue {
@@ -41,26 +40,26 @@ class Queue {
     int last_;
     int length_;
     TItem* data_;
-    void Initialize(int capacity);
-    void Cleanup(TItem* data);
+    void Initialize();
+    void Cleanup();
     void Resize(int new_capacity);
 };
 
 template <typename TItem>
 inline Queue<TItem>::Queue()
     : capacity_(4) {
-  Initialize(capacity_);
+  Initialize();
 }
 
 template <typename TItem>
 inline Queue<TItem>::Queue(int capacity)
     : capacity_(capacity) {
-  Initialize(capacity_);
+  Initialize();
 }
 
 template <typename TItem>
 inline Queue<TItem>::~Queue() {
-  Cleanup(data_);
+  Cleanup();
 }
 
 template <typename TItem>
@@ -113,21 +112,21 @@ inline TItem Queue<TItem>::Peek() {
 
 template <typename TItem>
 inline void Queue<TItem>::Clear() {
-  Cleanup(data_);
-  Initialize(capacity_);
+  Cleanup();
+  Initialize();
 }
 
 template <typename TItem>
-inline void Queue<TItem>::Initialize(int capacity) {
+inline void Queue<TItem>::Initialize() {
   first_ = -1;
   last_ = -1;
   length_ = 0;
-  data_ = new TItem[capacity];
+  data_ = new TItem[capacity_];
 }
 
 template <typename TItem>
-inline void Queue<TItem>::Cleanup(TItem* data) {
-  delete[] data;
+inline void Queue<TItem>::Cleanup() {
+  delete[] data_;
 }
 
 template <typename TItem>
@@ -136,7 +135,7 @@ inline void Queue<TItem>::Resize(int new_capacity) {
   for (int i = 0; i < length_; ++i) {
     new_data[i] = data_[((first_ + i) % capacity_)];
   }
-  Cleanup(data_);
+  Cleanup();
   data_ = new_data;
   first_ = 0;
   last_ = length_ - 1;
@@ -165,7 +164,6 @@ inline TItem Queue<TItem>::Iterator::Next() {
   return queue_.data_[index];
 }
 
-}
 }
 
 #endif

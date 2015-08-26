@@ -2,7 +2,6 @@
 #define DWARF_SHARED_COMPARER_H_
 
 namespace dwarf {
-namespace shared {
 
 template <typename TItem>
 class Comparer {
@@ -10,8 +9,8 @@ class Comparer {
     typedef TItem ItemType;
 	  Comparer();
     Comparer(const bool inverse);
-	  ~Comparer();
- 	  int Compare(TItem& a, TItem& b) const;
+	  virtual ~Comparer();
+ 	  virtual int Compare(TItem& a, TItem& b) const;
 
   private:
     const bool inverse_;
@@ -46,7 +45,6 @@ inline int Comparer<TItem>::Compare(TItem& a, TItem& b) const {
   return 0;
 }
 
-}
 }
 
 #endif

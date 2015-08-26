@@ -1,8 +1,7 @@
-#ifndef DWARF_SHARED_GRAPH_EDGE_H_
-#define DWARF_SHARED_GRAPH_EDGE_H_
+#ifndef DWARF_GRAPH_GRAPH_EDGE_H_
+#define DWARF_GRAPH_GRAPH_EDGE_H_
 
 namespace dwarf {
-namespace shared {
 
 class GraphEdge {
   public:
@@ -17,7 +16,7 @@ class GraphEdge {
   private:
     int from_;
     int to_;
-	double cost_;
+	  double cost_;
 };
 
 inline GraphEdge::GraphEdge(int from, int to)
@@ -48,7 +47,6 @@ inline void GraphEdge::set_cost(double cost) {
   cost_ = cost;
 }
 
-}
 }
 
 #endif

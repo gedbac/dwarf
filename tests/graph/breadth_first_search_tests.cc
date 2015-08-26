@@ -1,18 +1,10 @@
-#ifndef DWARF_TESTS_SHARED_BREADTH_FIRST_SEARCH_H_
-#define DWARF_TESTS_SHARED_BREADTH_FIRST_SEARCH_H_
+#include "unit_tests.h"
+#include "graph_node.h"
+#include "graph_edge.h"
+#include "graph.h"
+#include "breadth_first_search.h"
 
-#include "../unit_tests.h"
-
-#include "../../src/shared/graph_node.h"
-#include "../../src/shared/graph_edge.h"
-#include "../../src/shared/graph.h"
-#include "../../src/shared/breadth_first_search.h"
-
-namespace dwarf {
-namespace tests {
-namespace shared {
-
-using namespace dwarf::shared;
+using namespace dwarf;
 
 void print(BreadthFirstSearch<Graph<GraphNode,GraphEdge> >& bfs) {
 #ifdef DEBUG
@@ -43,21 +35,15 @@ TEST(should_find_path_using_bfs) {
   graph->CreateEdge(3, 5);
   graph->CreateEdge(4, 5);
 
-  BreadthFirstSearch<Graph<GraphNode,GraphEdge> >* bfs = new BreadthFirstSearch<Graph<GraphNode,GraphEdge> >(*graph);
-  bfs->set_source(4);
-  bfs->set_target(1);
-  if (bfs->Find()) {
-    print(*bfs);
+  BreadthFirstSearch<Graph<GraphNode,GraphEdge> >* search = new BreadthFirstSearch<Graph<GraphNode,GraphEdge> >(*graph);
+  search->set_source(4);
+  search->set_target(1);
+  if (search->Find()) {
+    print(*search);
   }
 
-  ASSERT(bfs->found());
+  ASSERT(search->found());
 
-  delete bfs;
+  delete search;
   delete graph;
 }
-
-}
-}
-}
-
-#endif

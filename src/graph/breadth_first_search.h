@@ -1,24 +1,19 @@
-#ifndef DWARF_SHARED_BREADTH_FIRST_SEARCH_H_
-#define DWARF_SHARED_BREADTH_FIRST_SEARCH_H_
+#ifndef DWARF_GRAPH_BREADTH_FIRST_SEARCH_H_
+#define DWARF_GRAPH_BREADTH_FIRST_SEARCH_H_
 
 #include "list.h"
 #include "queue.h"
 
 namespace dwarf {
-namespace shared {
 
 template <typename TGraph>
 class BreadthFirstSearch : public GraphSearch {
   public:
     BreadthFirstSearch(const TGraph& graph);
 	  virtual ~BreadthFirstSearch();
-    virtual bool found() const;
-  	virtual int source() const;
-    virtual void set_source(int source);
-    virtual int target() const;
-    virtual void set_target(int target);
     virtual bool Find();
     virtual const List<int>& GetPath() const;
+    virtual void Clear();
 
   private:
     typedef typename TGraph::NodeType Node;
@@ -26,86 +21,64 @@ class BreadthFirstSearch : public GraphSearch {
     typedef typename TGraph::EdgeIterator GraphEdgeIterator;
     enum { VISITED, UNVISITED, NO_PARENT_ASSIGNED };
 	  const TGraph& graph_;
-    bool found_;
-    int source_;
-    int target_;
     List<int>* visited_;
     List<int>* route_;
     List<int>* path_;
     Queue<const Edge*>* queue_;
     void Initialize();
-    void Cleanup(List<int>* visited, List<int>* route, List<int>* path, Queue<const Edge*>* queue);
+    void Cleanup();
     void PushUnvisitedEdgesToQueue(int index);
 };
 
 template <typename TGraph>
 inline BreadthFirstSearch<TGraph>::BreadthFirstSearch(const TGraph& graph)
-    : graph_(graph),
-      found_(false) {
+    : graph_(graph) {
   Initialize();
 }
 
 template <typename TGraph>
 inline BreadthFirstSearch<TGraph>::~BreadthFirstSearch() {
-  Cleanup(visited_, route_, path_, queue_);
-}
-
-template <typename TGraph>
-inline bool BreadthFirstSearch<TGraph>::found() const {
-  return found_;
-}
-
-template <typename TGraph>
-inline int BreadthFirstSearch<TGraph>::source() const {
-  return source_;
-}
-
-template <typename TGraph>
-inline void BreadthFirstSearch<TGraph>::set_source(int source) {
-  source_ = source;
-}
-
-template <typename TGraph>
-inline int BreadthFirstSearch<TGraph>::target() const {
-  return target_;
-}
-
-template <typename TGraph>
-inline void BreadthFirstSearch<TGraph>::set_target(int target) {
-  target_ = target;
+  Cleanup();
 }
 
 template <typename TGraph>
 inline bool BreadthFirstSearch<TGraph>::Find() {
-  if (graph_.HasNode(source_) && graph_.HasNode(target_)) {
+  if (graph_.HasNode(source()) && graph_.HasNode(target())) {
     const Edge* edge;
-    visited_->Set(source_, VISITED);
-    PushUnvisitedEdgesToQueue(source_);
+    visited_->Set(source(), VISITED);
+    PushUnvisitedEdgesToQueue(source());
     while (!queue_->IsEmpty()) {
       edge = queue_->Pop();
       route_->Set(edge->to(), edge->from());
-      if (edge->to() == target_) {
-        found_ = true;
+      if (edge->to() == target()) {
+        set_found(true);
         break;
       } else {
         PushUnvisitedEdgesToQueue(edge->to());
       }
     }
-    if (found_) {
-      int index = target_;
+    if (found()) {
+      int index = target();
       path_->Add(index);
-      while (index != source_) {
+      while (index != source()) {
         index = route_->Get(index);
         path_->Insert(0, index);
       }
     }
   }
-  return found_;
+  return found();
 }
 
 template <typename TGraph>
 inline const List<int>& BreadthFirstSearch<TGraph>::GetPath() const {
   return *path_;
+}
+
+template <typename TGraph>
+inline void BreadthFirstSearch<TGraph>::Clear() {
+  GraphSearch::Clear();
+  Cleanup();
+  Initialize();
 }
 
 template <typename TGraph>
@@ -125,12 +98,11 @@ inline void BreadthFirstSearch<TGraph>::Initialize() {
 }
 
 template <typename TGraph>
-inline void BreadthFirstSearch<TGraph>::Cleanup(List<int>* visited,
-  List<int>* route, List<int>* path, Queue<const Edge*>* queue) {
-  delete visited;
-  delete route;
-  delete path;
-  delete queue;
+inline void BreadthFirstSearch<TGraph>::Cleanup() {
+  delete visited_;
+  delete route_;
+  delete path_;
+  delete queue_;
 }
 
 template <typename TGraph>
@@ -145,7 +117,6 @@ inline void BreadthFirstSearch<TGraph>::PushUnvisitedEdgesToQueue(int index) {
   }
 }
 
-}
 }
 
 #endif

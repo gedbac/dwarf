@@ -1,10 +1,9 @@
-#ifndef DWARF_SHARED_GRAPH_H_
-#define DWARF_SHARED_GRAPH_H_
+#ifndef DWARF_GRAPH_GRAPH_H_
+#define DWARF_GRAPH_GRAPH_H_
 
 #include "list.h"
 
 namespace dwarf {
-namespace shared {
 
 template <typename TNode, typename TEdge>
 class Graph {
@@ -21,7 +20,7 @@ class Graph {
     Graph(int node_list_capacity, int edge_list_capacity);
     Graph(bool digraph);
     Graph(bool digraph, int node_list_capacity, int edge_list_capacity);
-    ~Graph();
+    virtual ~Graph();
     bool digraph() const;
     int GetNextNodeIndex();
     TNode& CreateNode(int index);
@@ -440,7 +439,6 @@ inline TEdge& Graph<TNode,TEdge>::EdgeIterator::Next() {
   return *(node_edges_->Get(position_++));
 }
 
-}
 }
 
 #endif

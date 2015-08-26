@@ -1,8 +1,7 @@
-#ifndef DWARF_SHARED_GRAPH_NIDE_H_
-#define DWARF_SHARED_GRAPH_NIDE_H_
+#ifndef DWARF_GRAPH_GRAPH_NIDE_H_
+#define DWARF_GRAPH_GRAPH_NIDE_H_
 
 namespace dwarf {
-namespace shared {
 
 class GraphNode {
   public:
@@ -23,7 +22,6 @@ inline int GraphNode::index() const {
   return index_;
 }
 
-}
 }
 
 #endif

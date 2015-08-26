@@ -1,17 +1,10 @@
-#ifndef DWARF_TESTS_SHARED_INDEXED_PRIORITY_QUEUE_H_
-#define DWARF_TESTS_SHARED_INDEXED_PRIORITY_QUEUE_H_
-
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../unit_tests.h"
-#include "../../src/shared/indexed_priority_queue.h"
+#include "unit_tests.h"
+#include "indexed_priority_queue.h"
 
-namespace dwarf {
-namespace tests {
-namespace shared {
-
-using namespace dwarf::shared;
+using namespace dwarf;
 
 void print(IndexedPriorityQueue<double>& queue) {
 #ifdef DEBUG
@@ -56,9 +49,3 @@ TEST(should_push_items_to_indexed_priority_queue) {
   delete ipq;
 
 }
-
-}
-}
-}
-
-#endif

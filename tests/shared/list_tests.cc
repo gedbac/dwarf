@@ -1,17 +1,10 @@
-#ifndef DWARF_TESTS_SHARED_LIST_H_
-#define DWARF_TESTS_SHARED_LIST_H_
-
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../unit_tests.h"
-#include "../../src/shared/list.h"
+#include "unit_tests.h"
+#include "list.h"
 
-namespace dwarf {
-namespace tests {
-namespace shared {
-
-using namespace dwarf::shared;
+using namespace dwarf;
 
 void print(List<int>& list) {
 #ifdef DEBUG
@@ -39,9 +32,3 @@ TEST(should_add_items_to_list) {
   delete list;
 
 }
-
-}
-}
-}
-
-#endif

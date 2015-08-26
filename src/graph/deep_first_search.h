@@ -1,25 +1,20 @@
-#ifndef DWARF_SHARED_DEEP_FIRST_SEARCH_H_
-#define DWARF_SHARED_DEEP_FIRST_SEARCH_H_
+#ifndef DWARF_GRAPH_DEEP_FIRST_SEARCH_H_
+#define DWARF_GRAPH_DEEP_FIRST_SEARCH_H_
 
 #include "graph_search.h"
 #include "list.h"
 #include "stack.h"
 
 namespace dwarf {
-namespace shared {
 
 template <typename TGraph>
 class DeepFirstSearch : public GraphSearch {
   public:
   	DeepFirstSearch(const TGraph& graph);
 	  virtual ~DeepFirstSearch();
-    virtual bool found() const;
-  	virtual int source() const;
-    virtual void set_source(int source);
-    virtual int target() const;
-    virtual void set_target(int target);
     virtual bool Find();
     virtual const List<int>& GetPath() const;
+    virtual void Clear();
 
   private:
     typedef typename TGraph::NodeType Node;
@@ -27,86 +22,64 @@ class DeepFirstSearch : public GraphSearch {
     typedef typename TGraph::EdgeIterator GraphEdgeIterator;
     enum { VISITED, UNVISITED, NO_PARENT_ASSIGNED };
 	  const TGraph& graph_;
-    bool found_;
-    int source_;
-    int target_;
     List<int>* visited_;
     List<int>* route_;
     List<int>* path_;
     Stack<const Edge*>* stack_;
     void Initialize();
-    void Cleanup(List<int>* visited, List<int>* route, List<int>* path, Stack<const Edge*>* stack);
+    void Cleanup();
     void PushUnvisitedEdgesToStack(int index);
 };
 
 template <typename TGraph>
 inline DeepFirstSearch<TGraph>::DeepFirstSearch(const TGraph& graph)
-    : graph_(graph),
-      found_(false) {
+    : graph_(graph) {
   Initialize();
 }
 
 template <typename TGraph>
 inline DeepFirstSearch<TGraph>::~DeepFirstSearch() {
-  Cleanup(visited_, route_, path_, stack_);
-}
-
-template <typename TGraph>
-inline bool DeepFirstSearch<TGraph>::found() const {
-  return found_;
-}
-
-template <typename TGraph>
-inline int DeepFirstSearch<TGraph>::source() const {
-  return source_;
-}
-
-template <typename TGraph>
-inline void DeepFirstSearch<TGraph>::set_source(int source) {
-  source_ = source;
-}
-
-template <typename TGraph>
-inline int DeepFirstSearch<TGraph>::target() const {
-  return target_;
-}
-
-template <typename TGraph>
-inline void DeepFirstSearch<TGraph>::set_target(int target) {
-  target_ = target;
+  Cleanup();
 }
 
 template <typename TGraph>
 inline bool DeepFirstSearch<TGraph>::Find() {
-  if (graph_.HasNode(source_) && graph_.HasNode(target_)) {
+  if (graph_.HasNode(source()) && graph_.HasNode(target())) {
     const Edge* edge;
-    PushUnvisitedEdgesToStack(source_);
+    PushUnvisitedEdgesToStack(source());
     while (!stack_->IsEmpty()) {
       edge = stack_->Pop();
       route_->Set(edge->to(), edge->from());
       visited_->Set(edge->to(), VISITED);
-      if (edge->to() == target_) {
-        found_ = true;
+      if (edge->to() == target()) {
+        set_found(true);
         break;
       } else {
         PushUnvisitedEdgesToStack(edge->to());
       }
     }
-    if (found_) {
-      int index = target_;
+    if (found()) {
+      int index = target();
       path_->Add(index);
-      while (index != source_) {
+      while (index != source()) {
         index = route_->Get(index);
         path_->Insert(0, index);
       }
     }
   }
-  return found_;
+  return found();
 }
 
 template <typename TGraph>
 inline const List<int>& DeepFirstSearch<TGraph>::GetPath() const {
   return *path_;
+}
+
+template <typename TGraph>
+inline void DeepFirstSearch<TGraph>::Clear() {
+  GraphSearch::Clear();
+  Cleanup();
+  Initialize();
 }
 
 template <typename TGraph>
@@ -126,12 +99,11 @@ inline void DeepFirstSearch<TGraph>::Initialize() {
 }
 
 template <typename TGraph>
-inline void DeepFirstSearch<TGraph>::Cleanup(List<int>* visited,
-  List<int>* route, List<int>* path, Stack<const Edge*>* stack) {
-  delete visited;
-  delete route;
-  delete path;
-  delete stack;
+inline void DeepFirstSearch<TGraph>::Cleanup() {
+  delete visited_;
+  delete route_;
+  delete path_;
+  delete stack_;
 }
 
 template <typename TGraph>
@@ -145,7 +117,6 @@ inline void DeepFirstSearch<TGraph>::PushUnvisitedEdgesToStack(int index) {
   }
 }
 
-}
 }
 
 #endif

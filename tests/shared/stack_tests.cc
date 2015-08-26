@@ -1,17 +1,10 @@
-#ifndef DWARF_TESTS_SHARED_STACK_H_
-#define DWARF_TESTS_SHARED_STACK_H_
-
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../unit_tests.h"
-#include "../../src/shared/stack.h"
+#include "unit_tests.h"
+#include "stack.h"
 
-namespace dwarf {
-namespace tests {
-namespace shared {
-
-using namespace dwarf::shared;
+using namespace dwarf;
 
 void print(Stack<int>& stack) {
 #ifdef DEBUG
@@ -39,9 +32,3 @@ TEST(should_push_items_to_stack) {
   delete stack;
 
 }
-
-}
-}
-}
-
-#endif

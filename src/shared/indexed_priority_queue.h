@@ -8,7 +8,6 @@
 #include "comparer.h"
 
 namespace dwarf {
-namespace shared {
 
 template <typename TItem>
 class IndexedPriorityQueue {
@@ -48,8 +47,8 @@ class IndexedPriorityQueue {
     int* heap_;
     int* inverse_heap_;
     const Comparer<TItem>& comparer_;
-    void Initialize(int capacity);
-    void Cleanup(TItem* data, int* heap, int* inverse_heap);
+    void Initialize();
+    void Cleanup();
     void Resize(int new_capacity);
     void Swap(int a, int b);
     int Compare(TItem& a, TItem& b) const;
@@ -61,19 +60,19 @@ template <typename TItem>
 inline IndexedPriorityQueue<TItem>::IndexedPriorityQueue(const Comparer<TItem>& comparer)
     : capacity_(4),
       comparer_(comparer) {
-  Initialize(capacity_);
+  Initialize();
 }
 
 template <typename TItem>
 inline IndexedPriorityQueue<TItem>::IndexedPriorityQueue(int capacity, const Comparer<TItem>& comparer)
     : capacity_(capacity),
       comparer_(comparer) {
-  Initialize(capacity_);
+  Initialize();
 }
 
 template <typename TItem>
 inline IndexedPriorityQueue<TItem>::~IndexedPriorityQueue() {
-  Cleanup(data_, heap_, inverse_heap_);
+  Cleanup();
 }
 
 template <typename TItem>
@@ -93,8 +92,8 @@ inline bool IndexedPriorityQueue<TItem>::IsEmpty() const {
 
 template <typename TItem>
 inline void IndexedPriorityQueue<TItem>::Clear() {
-  Cleanup(data_, heap_, inverse_heap_);
-  Initialize(capacity_);
+  Cleanup();
+  Initialize();
 }
 
 template <typename TItem>
@@ -150,18 +149,18 @@ inline TItem& IndexedPriorityQueue<TItem>::operator[] (int index) const {
 }
 
 template <typename TItem>
-inline void IndexedPriorityQueue<TItem>::Initialize(int capacity) {
+inline void IndexedPriorityQueue<TItem>::Initialize() {
   length_ = 0;
-  data_ = new TItem[capacity];
-  heap_ = new int[capacity];
-  inverse_heap_ = new int[capacity];
+  data_ = new TItem[capacity_];
+  heap_ = new int[capacity_];
+  inverse_heap_ = new int[capacity_];
 }
 
 template <typename TItem>
-inline void IndexedPriorityQueue<TItem>::Cleanup(TItem* data, int* heap, int* inverse_heap) {
-  delete[] data;
-  delete[] heap;
-  delete[] inverse_heap;
+inline void IndexedPriorityQueue<TItem>::Cleanup() {
+  delete[] data_;
+  delete[] heap_;
+  delete[] inverse_heap_;
 }
 
 template <typename TItem>
@@ -243,7 +242,6 @@ inline int IndexedPriorityQueue<TItem>::Iterator::Next() {
   return queue_.heap_[position_++];
 }
 
-}
 }
 
 #endif

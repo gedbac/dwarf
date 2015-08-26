@@ -4,7 +4,6 @@
 #include "comparer.h"
 
 namespace dwarf {
-namespace shared {
 
 #include <string.h>
 #include <assert.h>
@@ -44,8 +43,8 @@ class PriorityQueue {
     int length_;
     TItem* heap_;
     const Comparer<TItem>& comparer_;
-    void Initialize(int capacity);
-    void Cleanup(TItem* heap);
+    void Initialize();
+    void Cleanup();
     void Resize(int new_capacity);
     void Swap(TItem& a, TItem& b);
     int Compare(TItem& a, TItem& b) const;
@@ -57,19 +56,19 @@ template <typename TItem>
 inline PriorityQueue<TItem>::PriorityQueue(const Comparer<TItem>& comparer)
     : capacity_(4),
       comparer_(comparer) {
-  Initialize(capacity_);
+  Initialize();
 }
 
 template <typename TItem>
 inline PriorityQueue<TItem>::PriorityQueue(int capacity, const Comparer<TItem>& comparer)
     : capacity_(capacity),
       comparer_(comparer) {
-  Initialize(capacity_);
+  Initialize();
 }
 
 template <typename TItem>
 inline PriorityQueue<TItem>::~PriorityQueue() {
-  Cleanup(heap_);
+  Cleanup();
 }
 
 template <typename TItem>
@@ -124,21 +123,21 @@ inline TItem PriorityQueue<TItem>::Peek() {
 }
 
 template <typename TItem>
-inline void PriorityQueue<TItem>::Initialize(int capacity) {
+inline void PriorityQueue<TItem>::Initialize() {
   length_ = 0;
-  heap_ = new TItem[capacity];
+  heap_ = new TItem[capacity_];
 }
 
 template <typename TItem>
-inline void PriorityQueue<TItem>::Cleanup(TItem* heap) {
-  delete[] heap;
+inline void PriorityQueue<TItem>::Cleanup() {
+  delete[] heap_;
 }
 
 template <typename TItem>
 inline void PriorityQueue<TItem>::Resize(int new_capacity) {
   TItem* new_heap = new TItem[new_capacity];
   memcpy(new_heap, heap_, capacity_ * sizeof(TItem));
-  Cleanup(heap_);
+  Cleanup();
   heap_ = new_heap;
   capacity_ = new_capacity;
 }
@@ -203,7 +202,6 @@ inline TItem PriorityQueue<TItem>::Iterator::Next() {
   return queue_.heap_[position_++];
 }
 
-}
 }
 
 #endif

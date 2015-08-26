@@ -1,17 +1,10 @@
-#ifndef DWARF_TESTS_SHARED_PRIORITY_QUEUE_H_
-#define DWARF_TESTS_SHARED_PRIORITY_QUEUE_H_
-
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../unit_tests.h"
-#include "../../src/shared/priority_queue.h"
+#include "unit_tests.h"
+#include "priority_queue.h"
 
-namespace dwarf {
-namespace tests {
-namespace shared {
-
-using namespace dwarf::shared;
+using namespace dwarf;
 
 void print(PriorityQueue<int>& pqueue) {
 #ifdef DEBUG
@@ -51,9 +44,3 @@ TEST(should_push_items_to_priority_queue) {
 
   delete pqueue;
 }
-
-}
-}
-}
-
-#endif

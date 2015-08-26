@@ -2,7 +2,6 @@
 #define DWARF_SHARED_LIST_H_
 
 namespace dwarf {
-namespace shared {
 
 #include <string.h>
 #include <assert.h>
@@ -45,26 +44,26 @@ class List {
     int capacity_;
     int length_;
     TItem* data_;
-    void Initialize(int capacity);
-    void Cleanup(TItem* data);
+    void Initialize();
+    void Cleanup();
     void Resize(int new_capacity);
 };
 
 template <typename TItem>
 inline List<TItem>::List()
     : capacity_(4) {
-  Initialize(capacity_);
+  Initialize();
 }
 
 template <typename TItem>
 inline List<TItem>::List(int capacity)
     : capacity_(capacity) {
-  Initialize(capacity_);
+  Initialize();
 }
 
 template <typename TItem>
 inline List<TItem>::~List() {
-  Cleanup(data_);
+  Cleanup();
 }
 
 template <typename TItem>
@@ -149,8 +148,8 @@ inline void List<TItem>::Insert(int index, TItem item) {
 
 template <typename TItem>
 inline void List<TItem>::Clear() {
-  Cleanup(data_);
-  Initialize(capacity_);
+  Cleanup();
+  Initialize();
 }
 
 template <typename TItem>
@@ -160,21 +159,21 @@ inline TItem& List<TItem>::operator[] (int index) const {
 }
 
 template <typename TItem>
-inline void List<TItem>::Initialize(int capacity) {
+inline void List<TItem>::Initialize() {
   length_ = 0;
-  data_ = new TItem[capacity];
+  data_ = new TItem[capacity_];
 }
 
 template <typename TItem>
-inline void List<TItem>::Cleanup(TItem* data) {
-  delete[] data;
+inline void List<TItem>::Cleanup() {
+  delete[] data_;
 }
 
 template <typename TItem>
 inline void List<TItem>::Resize(int new_capacity) {
   TItem* new_data = new TItem[new_capacity];
   memcpy(new_data, data_, capacity_ * sizeof(TItem));
-  Cleanup(data_);
+  Cleanup();
   data_ = new_data;
   capacity_ = new_capacity;
 }
@@ -199,7 +198,6 @@ inline TItem List<TItem>::Iterator::Next() {
   return list_.data_[position_++];
 }
 
-}
 }
 
 #endif

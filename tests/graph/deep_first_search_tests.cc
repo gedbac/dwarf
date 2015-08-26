@@ -1,18 +1,10 @@
-#ifndef DWARF_TESTS_SHARED_DEEP_FIRST_SEARCH_H_
-#define DWARF_TESTS_SHARED_DEEP_FIRST_SEARCH_H_
+#include "unit_tests.h"
+#include "deep_first_search.h"
+#include "graph.h"
+#include "graph_node.h"
+#include "graph_edge.h"
 
-#include "../unit_tests.h"
-
-#include "../../src/shared/deep_first_search.h"
-#include "../../src/shared/graph.h"
-#include "../../src/shared/graph_node.h"
-#include "../../src/shared/graph_edge.h"
-
-namespace dwarf {
-namespace tests {
-namespace shared {
-
-using namespace dwarf::shared;
+using namespace dwarf;
 
 void print(DeepFirstSearch<Graph<GraphNode,GraphEdge> >& dfs) {
 #ifdef DEBUG
@@ -44,21 +36,15 @@ TEST(should_find_path_using_dfs) {
   graph->CreateEdge(3, 5);
   graph->CreateEdge(4, 5);
 
-  DeepFirstSearch<Graph<GraphNode,GraphEdge> >* dfs = new DeepFirstSearch<Graph<GraphNode,GraphEdge> >(*graph);
-  dfs->set_source(4);
-  dfs->set_target(1);
-  if (dfs->Find()) {
-    print(*dfs);
+  DeepFirstSearch<Graph<GraphNode,GraphEdge> >* search = new DeepFirstSearch<Graph<GraphNode,GraphEdge> >(*graph);
+  search->set_source(4);
+  search->set_target(1);
+  if (search->Find()) {
+    print(*search);
   }
 
-  ASSERT(dfs->found());
+  ASSERT(search->found());
 
-  delete dfs;
+  delete search;
   delete graph;
 }
-
-}
-}
-}
-
-#endif

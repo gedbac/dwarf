@@ -5,7 +5,6 @@
 #include <assert.h>
 
 namespace dwarf {
-namespace shared {
 
 template <typename TItem>
 class Stack {
@@ -40,26 +39,26 @@ class Stack {
     int capacity_;
     int length_;
     TItem* data_;
-    void Initialize(int capacity);
-    void Cleanup(TItem* data);
+    void Initialize();
+    void Cleanup();
     void Resize(int new_capacity);
 };
 
 template <typename TItem>
 inline Stack<TItem>::Stack()
     : capacity_(4) {
-  Initialize(capacity_);
+  Initialize();
 }
 
 template <typename TItem>
 inline Stack<TItem>::Stack(int capacity)
     : capacity_(capacity) {
-  Initialize(capacity_);
+  Initialize();
 }
 
 template <typename TItem>
 inline Stack<TItem>::~Stack() {
-  Cleanup(data_);
+  Cleanup();
 }
 
 template <typename TItem>
@@ -100,26 +99,26 @@ inline TItem Stack<TItem>::Peek() {
 
 template <typename TItem>
 inline void Stack<TItem>::Clear() {
-  Cleanup(data_);
-  Initialize(capacity_);
+  Cleanup();
+  Initialize();
 }
 
 template <typename TItem>
-inline void Stack<TItem>::Initialize(int capacity) {
+inline void Stack<TItem>::Initialize() {
   length_ = 0;
-  data_ = new TItem[capacity];
+  data_ = new TItem[capacity_];
 }
 
 template <typename TItem>
-inline void Stack<TItem>::Cleanup(TItem* data) {
-  delete[] data;
+inline void Stack<TItem>::Cleanup() {
+  delete[] data_;
 }
 
 template <typename TItem>
 inline void Stack<TItem>::Resize(int new_capacity) {
   TItem* new_data = new TItem[new_capacity];
   memcpy(new_data, data_, capacity_ * sizeof(TItem));
-  Cleanup(data_);
+  Cleanup();
   data_ = new_data;
   capacity_ = new_capacity;
 }
@@ -144,7 +143,6 @@ inline TItem Stack<TItem>::Iterator::Next() {
   return stack_.data_[position_--];
 }
 
-}
 }
 
 #endif

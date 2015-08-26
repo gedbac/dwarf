@@ -9,7 +9,7 @@ CC = g++
 CFLAGS = -Wall -g -O0 -D DEBUG
 
 # List of modules
-MODULES = shared
+MODULES = shared graph
 
 # Target definitions. "all" is the default.
 SRC_DIR = $(addprefix src/,$(MODULES))
@@ -31,10 +31,10 @@ endef
 build: clean checkdirs bin/dwarf bin/test_runner
 
 bin/dwarf: $(OBJ)
-	$(CC) $(CFLAGS) $^ src/dwarf.cc -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) $^ src/dwarf.cc -o $@
 
 bin/test_runner: $(OBJ)
-	$(CC) $(CFLAGS) $^ tests/test_runner.cc -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -Itests $^ tests/test_runner.cc -o $@
 
 checkdirs: $(BUILD_DIR)
 
