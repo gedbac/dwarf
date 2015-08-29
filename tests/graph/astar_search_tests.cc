@@ -10,8 +10,8 @@ using namespace dwarf;
 void print(GraphSearch& search) {
 #ifdef DEBUG
   printf("Path: ");
-  const List<int>& path = search.GetPath();
-  List<int>::Iterator iterator(path);
+  const List<I32>& path = search.GetPath();
+  List<I32>::Iterator iterator(path);
   while (iterator.HasNext()) {
     printf("%i ", iterator.Next());
   }
@@ -34,14 +34,14 @@ TEST(should_find_path_using_astar_search) {
   graph->CreateNode(4);
   graph->CreateNode(5);
 
-  graph->CreateEdge(0, 4, 2.9);
-  graph->CreateEdge(0, 5, 1.0);
-  graph->CreateEdge(1, 2, 3.1);
-  graph->CreateEdge(2, 4, 0.8);
-  graph->CreateEdge(3, 2, 3.7);
-  graph->CreateEdge(4, 1, 1.9);
-  graph->CreateEdge(4, 5, 3.0);
-  graph->CreateEdge(5, 3, 1.1);
+  graph->CreateEdge(0, 4, 2.9f);
+  graph->CreateEdge(0, 5, 1.0f);
+  graph->CreateEdge(1, 2, 3.1f);
+  graph->CreateEdge(2, 4, 0.8f);
+  graph->CreateEdge(3, 2, 3.7f);
+  graph->CreateEdge(4, 1, 1.9f);
+  graph->CreateEdge(4, 5, 3.0f);
+  graph->CreateEdge(5, 3, 1.1f);
 
   AStarHeuristic heuristic(*graph);
 
@@ -49,14 +49,14 @@ TEST(should_find_path_using_astar_search) {
 
   search->set_source(4);
   search->set_target(2);
-  
+
   if (search->Find()) {
     print(*search);
     printf("Cost to node: %f\n", search->GetCostToTarget());
   }
 
   ASSERT(search->found());
-  ASSERT((search->GetCostToTarget() == 5.0));
+  ASSERT((search->GetCostToTarget() == 5.0f));
 
   delete search;
   delete graph;

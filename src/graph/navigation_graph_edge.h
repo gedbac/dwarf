@@ -1,6 +1,7 @@
 #ifndef DWARF_GRAPH_NAVIGATION_GRAPH_EDGE_H_
 #define DWARF_GRAPH_NAVIGATION_GRAPH_EDGE_H_
 
+#include "dwarf.h"
 #include "graph_edge.h"
 
 namespace dwarf {
@@ -8,8 +9,8 @@ namespace dwarf {
 template <typename TExtraInfo = void*>
 class NavigationGraphEdge : public GraphEdge {
   public:
-    NavigationGraphEdge(int from, int to);
-    NavigationGraphEdge(int from, int to, double cost);
+    NavigationGraphEdge(I32 from, I32 to);
+    NavigationGraphEdge(I32 from, I32 to, F32 cost);
     ~NavigationGraphEdge();
     TExtraInfo extra_info() const;
     void set_extra_info(TExtraInfo extraInfo);
@@ -20,11 +21,11 @@ class NavigationGraphEdge : public GraphEdge {
 };
 
 template <typename TExtraInfo>
-inline NavigationGraphEdge<TExtraInfo>::NavigationGraphEdge(int from, int to)
-    : GraphEdge(from, to, 1.0) {}
+inline NavigationGraphEdge<TExtraInfo>::NavigationGraphEdge(I32 from, I32 to)
+    : GraphEdge(from, to, 1.0f) {}
 
 template <typename TExtraInfo>
-inline NavigationGraphEdge<TExtraInfo>::NavigationGraphEdge(int from, int to, double cost)
+inline NavigationGraphEdge<TExtraInfo>::NavigationGraphEdge(I32 from, I32 to, F32 cost)
     : GraphEdge(from, to, cost) {}
 
 template <typename TExtraInfo>

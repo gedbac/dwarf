@@ -1,6 +1,7 @@
 #ifndef DWARF_GRAPH_GRAPH_H_
 #define DWARF_GRAPH_GRAPH_H_
 
+#include "dwarf.h"
 #include "list.h"
 
 namespace dwarf {
@@ -17,35 +18,35 @@ class Graph {
     typedef typename NodeEdgeList::Iterator NodeEdgeListIterator;
     typedef typename EdgeList::Iterator EdgeListIterator;
     Graph();
-    Graph(int node_list_capacity, int edge_list_capacity);
-    Graph(bool digraph);
-    Graph(bool digraph, int node_list_capacity, int edge_list_capacity);
+    Graph(I32 node_list_capacity, I32 edge_list_capacity);
+    Graph(BOOL digraph);
+    Graph(BOOL digraph, I32 node_list_capacity, I32 edge_list_capacity);
     virtual ~Graph();
-    bool digraph() const;
-    int GetNextNodeIndex();
-    TNode& CreateNode(int index);
-    TNode& GetNode(int index) const;
-    bool HasNode(int index) const;
-    void RemoveNode(int index);
-    int NodeCount() const;
-    TEdge& CreateEdge(int from, int to);
-    TEdge& CreateEdge(int from, int to, double cost);
-    TEdge& GetEdge(int from, int to) const;
-    bool HasEdge(int from, int to) const;
-    void RemoveEdge(int from, int to);
-    int EdgeCount(int index) const;
-    int EdgeCount() const;
+    BOOL digraph() const;
+    I32 GetNextNodeIndex();
+    TNode& CreateNode(I32 index);
+    TNode& GetNode(I32 index) const;
+    BOOL HasNode(I32 index) const;
+    void RemoveNode(I32 index);
+    I32 NodeCount() const;
+    TEdge& CreateEdge(I32 from, I32 to);
+    TEdge& CreateEdge(I32 from, I32 to, F32 cost);
+    TEdge& GetEdge(I32 from, I32 to) const;
+    BOOL HasEdge(I32 from, I32 to) const;
+    void RemoveEdge(I32 from, I32 to);
+    I32 EdgeCount(I32 index) const;
+    I32 EdgeCount() const;
     void Clear();
 
     class NodeIterator {
       public:
         NodeIterator(const Graph<TNode,TEdge>& graph);
         ~NodeIterator();
-        bool HasNext();
+        BOOL HasNext();
         TNode& Next();
 
       private:
-        int position_;
+        I32 position_;
         const Graph<TNode,TEdge>& graph_;
     };
 
@@ -53,13 +54,13 @@ class Graph {
 
     class EdgeIterator {
       public:
-        EdgeIterator(const Graph<TNode,TEdge>& graph, int index);
+        EdgeIterator(const Graph<TNode,TEdge>& graph, I32 index);
         ~EdgeIterator();
-        bool HasNext();
+        BOOL HasNext();
         TEdge& Next();
 
       private:
-        int position_;
+        I32 position_;
         const Graph<TNode,TEdge>& graph_;
         NodeEdgeList* node_edges_;
     };
@@ -67,13 +68,13 @@ class Graph {
     friend class EdgeIterator;
 
   private:
-    bool digraph_;
-    int node_list_capacity_;
-    int edge_list_capacity_;
-    int next_node_index_;
+    BOOL digraph_;
+    I32 node_list_capacity_;
+    I32 edge_list_capacity_;
+    I32 next_node_index_;
     NodeList* nodes_;
     EdgeList* edges_;
-    void Initialize(int node_list_capacity, int edge_list_capacity);
+    void Initialize(I32 node_list_capacity, I32 edge_list_capacity);
     void Cleanup(NodeList* nodes, EdgeList* edges);
     void DeleteNodes(NodeList* nodes);
     void DeleteEdges(EdgeList* edges);
@@ -89,7 +90,7 @@ inline Graph<TNode,TEdge>::Graph()
 }
 
 template <typename TNode, typename TEdge>
-inline Graph<TNode,TEdge>::Graph(int node_list_capacity, int edge_list_capacity)
+inline Graph<TNode,TEdge>::Graph(I32 node_list_capacity, I32 edge_list_capacity)
     : digraph_(false),
       node_list_capacity_(node_list_capacity),
       edge_list_capacity_(edge_list_capacity),
@@ -98,7 +99,7 @@ inline Graph<TNode,TEdge>::Graph(int node_list_capacity, int edge_list_capacity)
 }
 
 template <typename TNode, typename TEdge>
-inline Graph<TNode,TEdge>::Graph(bool digraph)
+inline Graph<TNode,TEdge>::Graph(BOOL digraph)
     : digraph_(digraph),
       node_list_capacity_(4),
       edge_list_capacity_(4),
@@ -107,8 +108,8 @@ inline Graph<TNode,TEdge>::Graph(bool digraph)
 }
 
 template <typename TNode, typename TEdge>
-inline Graph<TNode,TEdge>::Graph(bool digraph, int node_list_capacity,
-  int edge_list_capacity)
+inline Graph<TNode,TEdge>::Graph(BOOL digraph, I32 node_list_capacity,
+  I32 edge_list_capacity)
     : digraph_(digraph),
       node_list_capacity_(node_list_capacity),
       edge_list_capacity_(edge_list_capacity),
@@ -122,17 +123,17 @@ inline Graph<TNode,TEdge>::~Graph() {
 }
 
 template <typename TNode, typename TEdge>
-inline bool Graph<TNode,TEdge>::digraph() const {
+inline BOOL Graph<TNode,TEdge>::digraph() const {
   return digraph_;
 }
 
 template <typename TNode, typename TEdge>
-inline int Graph<TNode,TEdge>::GetNextNodeIndex() {
+inline I32 Graph<TNode,TEdge>::GetNextNodeIndex() {
   return next_node_index_;
 }
 
 template <typename TNode, typename TEdge>
-inline TNode& Graph<TNode,TEdge>::CreateNode(int index) {
+inline TNode& Graph<TNode,TEdge>::CreateNode(I32 index) {
   assert(index >= 0 && index >= nodes_->length() && "node's index is invalid");
   assert(!HasNode(index) && "attempting to add a dublicate node");
   TNode* node = new TNode(index);
@@ -143,7 +144,7 @@ inline TNode& Graph<TNode,TEdge>::CreateNode(int index) {
 }
 
 template <typename TNode, typename TEdge>
-inline TNode& Graph<TNode,TEdge>::GetNode(int index) const {
+inline TNode& Graph<TNode,TEdge>::GetNode(I32 index) const {
   assert(index >= 0 && index < nodes_->length() && "node's index is invalid");
   TNode* node = nodes_->Get(index);
   assert(node != NULL && "node doesn't exists");
@@ -151,7 +152,7 @@ inline TNode& Graph<TNode,TEdge>::GetNode(int index) const {
 }
 
 template <typename TNode, typename TEdge>
-inline bool Graph<TNode,TEdge>::HasNode(int index) const {
+inline BOOL Graph<TNode,TEdge>::HasNode(I32 index) const {
   if (index >= 0 && index < nodes_->length()) {
     TNode* node = nodes_->Get(index);
     if (node != NULL) {
@@ -162,7 +163,7 @@ inline bool Graph<TNode,TEdge>::HasNode(int index) const {
 }
 
 template <typename TNode, typename TEdge>
-inline void Graph<TNode,TEdge>::RemoveNode(int index) {
+inline void Graph<TNode,TEdge>::RemoveNode(I32 index) {
   assert(index >= 0 && index < nodes_->length() && "node's index is invalid");
   TNode* node = nodes_->Get(index);
   if (node != NULL) {
@@ -188,7 +189,7 @@ inline void Graph<TNode,TEdge>::RemoveNode(int index) {
       while (nodeEdgeIterator.HasNext()) {
         edge = nodeEdgeIterator.Next();
         if (edge != NULL && edge->to() == index) {
-          int index = node_edges->IndexOf(edge);
+          I32 index = node_edges->IndexOf(edge);
           node_edges->Set(index, NULL);
           delete edge;
         }
@@ -198,8 +199,8 @@ inline void Graph<TNode,TEdge>::RemoveNode(int index) {
 }
 
 template <typename TNode, typename TEdge>
-inline int Graph<TNode,TEdge>::NodeCount() const {
-  int count = 0;
+inline I32 Graph<TNode,TEdge>::NodeCount() const {
+  I32 count = 0;
   TNode* node;
   NodeListIterator iterator(*nodes_);
   while (iterator.HasNext()) {
@@ -212,7 +213,7 @@ inline int Graph<TNode,TEdge>::NodeCount() const {
 }
 
 template <typename TNode, typename TEdge>
-inline TEdge& Graph<TNode,TEdge>::CreateEdge(int from, int to) {
+inline TEdge& Graph<TNode,TEdge>::CreateEdge(I32 from, I32 to) {
   assert(from >= 0 && from < nodes_->length() && "node's 'from' index is invalid");
   assert(to >= 0 && to < nodes_->length() && "node's 'to' index is invalid");
   assert(!HasEdge(from, to) && "attempting to add a dublicate edge");
@@ -228,7 +229,7 @@ inline TEdge& Graph<TNode,TEdge>::CreateEdge(int from, int to) {
 }
 
 template <typename TNode, typename TEdge>
-inline TEdge& Graph<TNode,TEdge>::CreateEdge(int from, int to, double cost) {
+inline TEdge& Graph<TNode,TEdge>::CreateEdge(I32 from, I32 to, F32 cost) {
   assert(from >= 0 && from < nodes_->length() && "node's 'from' index is invalid");
   assert(to >= 0 && to < nodes_->length() && "node's 'to' index is invalid");
   assert(!HasEdge(from, to) && "attempting to add a dublicate edge");
@@ -244,7 +245,7 @@ inline TEdge& Graph<TNode,TEdge>::CreateEdge(int from, int to, double cost) {
 }
 
 template <typename TNode, typename TEdge>
-inline TEdge& Graph<TNode,TEdge>::GetEdge(int from, int to) const {
+inline TEdge& Graph<TNode,TEdge>::GetEdge(I32 from, I32 to) const {
   assert(from >= 0 && from < nodes_->length() && "node's 'from' index is invalid");
   assert(to >= 0 && to < nodes_->length() && "node's 'to' index is invalid");
   NodeEdgeList* node_edges = edges_->Get(from);
@@ -262,7 +263,7 @@ inline TEdge& Graph<TNode,TEdge>::GetEdge(int from, int to) const {
 }
 
 template <typename TNode, typename TEdge>
-inline bool Graph<TNode,TEdge>::HasEdge(int from, int to) const {
+inline BOOL Graph<TNode,TEdge>::HasEdge(I32 from, I32 to) const {
   if (from >= 0 && from < nodes_->length() && to >= 0 && to < nodes_->length()) {
     NodeEdgeList* node_edges = edges_->Get(from);
     TEdge* edge;
@@ -278,7 +279,7 @@ inline bool Graph<TNode,TEdge>::HasEdge(int from, int to) const {
 }
 
 template <typename TNode, typename TEdge>
-inline void Graph<TNode,TEdge>::RemoveEdge(int from, int to) {
+inline void Graph<TNode,TEdge>::RemoveEdge(I32 from, I32 to) {
   assert(from >= 0 && from < nodes_->length() && "node's 'from' index is invalid");
   assert(to >= 0 && to < nodes_->length() && "node's 'to' index is invalid");
   NodeEdgeList* node_edges = edges_->Get(from);
@@ -288,7 +289,7 @@ inline void Graph<TNode,TEdge>::RemoveEdge(int from, int to) {
     while (iterator.HasNext()) {
       edge = iterator.Next();
       if (edge != NULL && edge->to() == to) {
-        int index = node_edges->IndexOf(edge);
+        I32 index = node_edges->IndexOf(edge);
         node_edges->Set(index, NULL);
         delete edge;
         break;
@@ -298,9 +299,9 @@ inline void Graph<TNode,TEdge>::RemoveEdge(int from, int to) {
 }
 
 template <typename TNode, typename TEdge>
-inline int Graph<TNode,TEdge>::EdgeCount(int index) const {
+inline I32 Graph<TNode,TEdge>::EdgeCount(I32 index) const {
   assert(index >= 0 && index < nodes_->length() && "node's index is invalid");
-  int count = 0;
+  I32 count = 0;
   NodeEdgeList* node_edges = edges_->Get(index);
   if (node_edges != NULL) {
     NodeEdgeListIterator iterator(*node_edges);
@@ -316,8 +317,8 @@ inline int Graph<TNode,TEdge>::EdgeCount(int index) const {
 }
 
 template <typename TNode, typename TEdge>
-inline int Graph<TNode,TEdge>::EdgeCount() const {
-  int count = 0;
+inline I32 Graph<TNode,TEdge>::EdgeCount() const {
+  I32 count = 0;
   NodeEdgeList* node_edges;
   TEdge* edge;
   EdgeListIterator edgeIterator(*edges_);
@@ -343,14 +344,13 @@ inline void Graph<TNode,TEdge>::Clear() {
 }
 
 template <typename TNode, typename TEdge>
-inline void Graph<TNode,TEdge>::Initialize(int node_list_capacity,
-    int edge_list_capacity) {
+inline void Graph<TNode,TEdge>::Initialize(I32 node_list_capacity, I32 edge_list_capacity) {
   nodes_ = new NodeList(node_list_capacity);
   edges_ = new EdgeList(edge_list_capacity);
 }
 
 template <typename TNode, typename TEdge>
-inline void Graph<TNode,TEdge>::Cleanup(NodeList* nodes, EdgeList* edges){
+inline void Graph<TNode,TEdge>::Cleanup(NodeList* nodes, EdgeList* edges) {
   DeleteNodes(nodes);
   DeleteEdges(edges);
 }
@@ -388,15 +388,13 @@ inline void Graph<TNode,TEdge>::DeleteEdges(EdgeList* edges) {
 template <typename TNode, typename TEdge>
 inline Graph<TNode,TEdge>::NodeIterator::NodeIterator(const Graph<TNode,TEdge>& graph)
     : position_(0),
-      graph_(graph) {
-}
+      graph_(graph) {}
 
 template <typename TNode, typename TEdge>
-inline Graph<TNode,TEdge>::NodeIterator::~NodeIterator() {
-}
+inline Graph<TNode,TEdge>::NodeIterator::~NodeIterator() {}
 
 template <typename TNode, typename TEdge>
-inline bool Graph<TNode,TEdge>::NodeIterator::HasNext() {
+inline BOOL Graph<TNode,TEdge>::NodeIterator::HasNext() {
   while (position_ < graph_.nodes_->length()) {
     if (graph_.nodes_->Get(position_) != NULL) {
       return true;
@@ -412,8 +410,7 @@ inline TNode& Graph<TNode,TEdge>::NodeIterator::Next() {
 }
 
 template <typename TNode, typename TEdge>
-inline Graph<TNode,TEdge>::EdgeIterator::EdgeIterator(const Graph<TNode,TEdge>& graph,
-  int index)
+inline Graph<TNode,TEdge>::EdgeIterator::EdgeIterator(const Graph<TNode,TEdge>& graph, I32 index)
     : position_(0),
       graph_(graph) {
   node_edges_ = graph.edges_->Get(index);
@@ -424,7 +421,7 @@ inline Graph<TNode,TEdge>::EdgeIterator::~EdgeIterator() {
 }
 
 template <typename TNode, typename TEdge>
-inline bool Graph<TNode,TEdge>::EdgeIterator::HasNext() {
+inline BOOL Graph<TNode,TEdge>::EdgeIterator::HasNext() {
   while (position_ < node_edges_->length()) {
     if (node_edges_->Get(position_) != NULL) {
       return true;

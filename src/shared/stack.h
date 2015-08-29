@@ -4,6 +4,8 @@
 #include <string.h>
 #include <assert.h>
 
+#include "dwarf.h"
+
 namespace dwarf {
 
 template <typename TItem>
@@ -11,11 +13,11 @@ class Stack {
   public:
     typedef TItem ItemType;
     Stack();
-    Stack(int capacity);
+    Stack(I32 capacity);
     ~Stack();
-    int capacity() const;
-    int length() const;
-    bool IsEmpty() const;
+    I32 capacity() const;
+    I32 length() const;
+    BOOL IsEmpty() const;
     void Push(TItem item);
     TItem Pop();
     TItem Peek();
@@ -25,23 +27,23 @@ class Stack {
       public:
         Iterator(const Stack<TItem>& stack);
         ~Iterator();
-        bool HasNext() const;
+        BOOL HasNext() const;
         TItem Next();
 
       private:
-        int position_;
+        I32 position_;
         const Stack<TItem>& stack_;
     };
 
     friend class Iterator;
 
   private:
-    int capacity_;
-    int length_;
+    I32 capacity_;
+    I32 length_;
     TItem* data_;
     void Initialize();
     void Cleanup();
-    void Resize(int new_capacity);
+    void Resize(I32 new_capacity);
 };
 
 template <typename TItem>
@@ -51,7 +53,7 @@ inline Stack<TItem>::Stack()
 }
 
 template <typename TItem>
-inline Stack<TItem>::Stack(int capacity)
+inline Stack<TItem>::Stack(I32 capacity)
     : capacity_(capacity) {
   Initialize();
 }
@@ -62,24 +64,24 @@ inline Stack<TItem>::~Stack() {
 }
 
 template <typename TItem>
-inline int Stack<TItem>::capacity() const {
+inline I32 Stack<TItem>::capacity() const {
   return capacity_;
 }
 
 template <typename TItem>
-inline int Stack<TItem>::length() const {
+inline I32 Stack<TItem>::length() const {
   return length_;
 }
 
 template <typename TItem>
-inline bool Stack<TItem>::IsEmpty() const {
+inline BOOL Stack<TItem>::IsEmpty() const {
   return length_ == 0;
 }
 
 template <typename TItem>
 inline void Stack<TItem>::Push(TItem item) {
   if (length_ >= capacity_) {
-    int new_capacity = 2 * capacity_ + 1;
+    I32 new_capacity = 2 * capacity_ + 1;
     Resize(new_capacity);
   }
   data_[length_++] = item;
@@ -115,7 +117,7 @@ inline void Stack<TItem>::Cleanup() {
 }
 
 template <typename TItem>
-inline void Stack<TItem>::Resize(int new_capacity) {
+inline void Stack<TItem>::Resize(I32 new_capacity) {
   TItem* new_data = new TItem[new_capacity];
   memcpy(new_data, data_, capacity_ * sizeof(TItem));
   Cleanup();
@@ -134,7 +136,7 @@ inline Stack<TItem>::Iterator::~Iterator() {
 }
 
 template <typename TItem>
-inline bool Stack<TItem>::Iterator::HasNext() const {
+inline BOOL Stack<TItem>::Iterator::HasNext() const {
   return position_ >= 0;
 }
 

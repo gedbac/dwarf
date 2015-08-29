@@ -1,6 +1,7 @@
 #ifndef DWARF_GRAPH_BREADTH_FIRST_SEARCH_H_
 #define DWARF_GRAPH_BREADTH_FIRST_SEARCH_H_
 
+#include "dwarf.h"
 #include "list.h"
 #include "queue.h"
 
@@ -11,7 +12,7 @@ class BreadthFirstSearch : public GraphSearch {
   public:
     BreadthFirstSearch(const TGraph& graph);
     virtual ~BreadthFirstSearch();
-    virtual bool Find();
+    virtual BOOL Find();
     virtual const List<int>& GetPath() const;
     virtual void Clear();
 
@@ -42,7 +43,7 @@ inline BreadthFirstSearch<TGraph>::~BreadthFirstSearch() {
 }
 
 template <typename TGraph>
-inline bool BreadthFirstSearch<TGraph>::Find() {
+inline BOOL BreadthFirstSearch<TGraph>::Find() {
   if (graph_.HasNode(source()) && graph_.HasNode(target())) {
     const Edge* edge;
     visited_->Set(source(), VISITED);

@@ -6,10 +6,10 @@
 
 using namespace dwarf;
 
-void print(IndexedPriorityQueue<double>& queue) {
+void print(IndexedPriorityQueue<F32>& queue) {
 #ifdef DEBUG
   printf("Indexed Priority Queue: ");
-  IndexedPriorityQueue<double>::Iterator iterator(queue);
+  IndexedPriorityQueue<F32>::Iterator iterator(queue);
   while (iterator.HasNext()) {
     int item = iterator.Next();
     printf("%i ", item);
@@ -20,20 +20,20 @@ void print(IndexedPriorityQueue<double>& queue) {
 
 TEST(should_push_items_to_indexed_priority_queue) {
 
-  IndexedPriorityQueue<double>* ipq = new IndexedPriorityQueue<double>(Comparer<double>(true));
+  IndexedPriorityQueue<F32>* ipq = new IndexedPriorityQueue<F32>(Comparer<F32>(true));
 
   int index = -1;
 
-  ipq->Push(4, 4.0);
+  ipq->Push(4, 4.0f);
   print(*ipq);
 
-  ipq->Push(1, 1.0);
+  ipq->Push(1, 1.0f);
   print(*ipq);
 
-  ipq->Push(5, 5.0);
+  ipq->Push(5, 5.0f);
   print(*ipq);
 
-  ipq->Push(2, 2.0);
+  ipq->Push(2, 2.0f);
   print(*ipq);
 
   index = ipq->Pop();

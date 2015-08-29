@@ -1,6 +1,7 @@
 #ifndef DWARF_SHARED_PRIORITY_QUEUE_H_
 #define DWARF_SHARED_PRIORITY_QUEUE_H_
 
+#include "dwarf.h"
 #include "comparer.h"
 
 namespace dwarf {
@@ -14,11 +15,11 @@ class PriorityQueue {
   public:
     typedef TItem ItemType;
     PriorityQueue(const Comparer<TItem>& comparer = Comparer<TItem>());
-	  PriorityQueue(int capacity, const Comparer<TItem>& comparer = Comparer<TItem>());
+	  PriorityQueue(I32 capacity, const Comparer<TItem>& comparer = Comparer<TItem>());
 	  ~PriorityQueue();
-	  int capacity() const;
-    int length() const;
-    bool IsEmpty() const;
+	  I32 capacity() const;
+    I32 length() const;
+    BOOL IsEmpty() const;
     void Clear();
     void Push(TItem item);
     TItem Pop();
@@ -28,28 +29,28 @@ class PriorityQueue {
       public:
         Iterator(const PriorityQueue<TItem>& queue);
         ~Iterator();
-        bool HasNext() const;
+        BOOL HasNext() const;
         TItem Next();
 
       private:
-        int position_;
+        I32 position_;
         const PriorityQueue<TItem>& queue_;
     };
 
     friend class Iterator;
 
   private:
-    int capacity_;
-    int length_;
+    I32 capacity_;
+    I32 length_;
     TItem* heap_;
     const Comparer<TItem>& comparer_;
     void Initialize();
     void Cleanup();
-    void Resize(int new_capacity);
+    void Resize(I32 new_capacity);
     void Swap(TItem& a, TItem& b);
-    int Compare(TItem& a, TItem& b) const;
-    void ShiftUp(int index);
-    void ShiftDown(int index);
+    I32 Compare(TItem& a, TItem& b) const;
+    void ShiftUp(I32 index);
+    void ShiftDown(I32 index);
 };
 
 template <typename TItem>
@@ -60,7 +61,7 @@ inline PriorityQueue<TItem>::PriorityQueue(const Comparer<TItem>& comparer)
 }
 
 template <typename TItem>
-inline PriorityQueue<TItem>::PriorityQueue(int capacity, const Comparer<TItem>& comparer)
+inline PriorityQueue<TItem>::PriorityQueue(I32 capacity, const Comparer<TItem>& comparer)
     : capacity_(capacity),
       comparer_(comparer) {
   Initialize();
@@ -72,17 +73,17 @@ inline PriorityQueue<TItem>::~PriorityQueue() {
 }
 
 template <typename TItem>
-inline int PriorityQueue<TItem>::capacity() const {
+inline I32 PriorityQueue<TItem>::capacity() const {
   return capacity_;
 }
 
 template <typename TItem>
-inline int PriorityQueue<TItem>::length() const {
+inline I32 PriorityQueue<TItem>::length() const {
   return length_;
 }
 
 template <typename TItem>
-inline bool PriorityQueue<TItem>::IsEmpty() const {
+inline BOOL PriorityQueue<TItem>::IsEmpty() const {
   return length_ == 0;
 }
 
@@ -95,7 +96,7 @@ inline void PriorityQueue<TItem>::Clear() {
 template <typename TItem>
 inline void PriorityQueue<TItem>::Push(TItem item) {
   if (length_ == capacity_) {
-    int new_capacity = 2 * capacity_ + 1;
+    I32 new_capacity = 2 * capacity_ + 1;
     Resize(new_capacity);
   }
   heap_[length_++] = item;
@@ -134,7 +135,7 @@ inline void PriorityQueue<TItem>::Cleanup() {
 }
 
 template <typename TItem>
-inline void PriorityQueue<TItem>::Resize(int new_capacity) {
+inline void PriorityQueue<TItem>::Resize(I32 new_capacity) {
   TItem* new_heap = new TItem[new_capacity];
   memcpy(new_heap, heap_, capacity_ * sizeof(TItem));
   Cleanup();
@@ -150,13 +151,13 @@ inline void PriorityQueue<TItem>::Swap(TItem &a, TItem &b) {
 }
 
 template <typename TItem>
-inline int PriorityQueue<TItem>::Compare(TItem& a, TItem& b) const {
+inline I32 PriorityQueue<TItem>::Compare(TItem& a, TItem& b) const {
   return comparer_.Compare(a, b);
 }
 
 template <typename TItem>
-inline void PriorityQueue<TItem>::ShiftUp(int index) {
-  int parent = floor((index - 1) / 2);
+inline void PriorityQueue<TItem>::ShiftUp(I32 index) {
+  I32 parent = floor((index - 1) / 2);
   if (index > 0 && Compare(heap_[index], heap_[parent]) == 1) {
     Swap(heap_[index], heap_[parent]);
     ShiftUp(parent);
@@ -164,11 +165,11 @@ inline void PriorityQueue<TItem>::ShiftUp(int index) {
 }
 
 template <typename TItem>
-inline void PriorityQueue<TItem>::ShiftDown(int index) {
+inline void PriorityQueue<TItem>::ShiftDown(I32 index) {
   if (index < length_) {
-    int left = 2 * index + 1;
-    int right = 2 * index + 2;
-    int largest = index;
+    I32 left = 2 * index + 1;
+    I32 right = 2 * index + 2;
+    I32 largest = index;
     if (left < length_ && Compare(heap_[left], heap_[largest]) == 1) {
       largest = left;
     }
@@ -193,7 +194,7 @@ inline PriorityQueue<TItem>::Iterator::~Iterator() {
 }
 
 template <typename TItem>
-inline bool PriorityQueue<TItem>::Iterator::HasNext() const {
+inline BOOL PriorityQueue<TItem>::Iterator::HasNext() const {
   return position_ < queue_.length();
 }
 

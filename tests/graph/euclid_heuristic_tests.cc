@@ -15,15 +15,15 @@ TEST(should_calculate_cost_using_euclid_heuristic) {
   NavigationGraph graph(true);
 
   NavigationGraphNode& node1 = graph.CreateNode(0);
-  node1.set_position(Point(0.0, 0.0));
+  node1.set_position(Point(0.0f, 0.0f));
   NavigationGraphNode& node2 = graph.CreateNode(1);
-  node2.set_position(Point(10.0, 0.0));
+  node2.set_position(Point(10.0f, 0.0f));
 
   EuclidHeuristic<NavigationGraph> heuristic(graph);
 
-  double cost = heuristic.Calculate(0, 1);
+  F32 cost = heuristic.Calculate(0, 1);
 
-  ASSERT((cost == 10.0));
+  ASSERT((cost == 10.0f));
 }
 
 

@@ -1,6 +1,7 @@
 #ifndef DWARF_GRAPH_NAVIGATION_GRAPH_NODE_H_
 #define DWARF_GRAPH_NAVIGATION_GRAPH_NODE_H_
 
+#include "dwarf.h"
 #include "graph_node.h"
 #include "point.h"
 
@@ -9,8 +10,8 @@ namespace dwarf {
 template <typename TExtraInfo = void*>
 class NavigationGraphNode : public GraphNode {
   public:
-    NavigationGraphNode(int index);
-    NavigationGraphNode(int index, Point position);
+    NavigationGraphNode(I32 index);
+    NavigationGraphNode(I32 index, Point position);
     virtual ~NavigationGraphNode();
     Point position() const;
     void set_position(Point position);
@@ -23,12 +24,12 @@ class NavigationGraphNode : public GraphNode {
 };
 
 template <typename TExtraInfo>
-inline NavigationGraphNode<TExtraInfo>::NavigationGraphNode(int index)
+inline NavigationGraphNode<TExtraInfo>::NavigationGraphNode(I32 index)
     : GraphNode(index),
       position_(Point()) {}
 
 template <typename TExtraInfo>
-inline NavigationGraphNode<TExtraInfo>::NavigationGraphNode(int index, Point position)
+inline NavigationGraphNode<TExtraInfo>::NavigationGraphNode(I32 index, Point position)
     : GraphNode(index),
       position_(position) {}
 

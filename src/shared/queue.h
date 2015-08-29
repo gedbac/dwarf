@@ -3,6 +3,8 @@
 
 #include <assert.h>
 
+#include "dwarf.h"
+
 namespace dwarf {
 
 template <typename TItem>
@@ -10,11 +12,11 @@ class Queue {
   public:
     typedef TItem ItemType;
     Queue();
-    Queue(int capacity);
+    Queue(I32 capacity);
     ~Queue();
-    int capacity() const;
-    int length() const;
-    bool IsEmpty() const;
+    I32 capacity() const;
+    I32 length() const;
+    BOOL IsEmpty() const;
     void Push(TItem item);
     TItem Pop();
     TItem Peek();
@@ -24,25 +26,25 @@ class Queue {
       public:
         Iterator(const Queue<TItem>& queue);
         ~Iterator();
-        bool HasNext() const;
+        BOOL HasNext() const;
         TItem Next();
 
       private:
-        int position_;
+        I32 position_;
         const Queue<TItem>& queue_;
     };
 
     friend class Iterator;
 
   private:
-    int capacity_;
-    int first_;
-    int last_;
-    int length_;
+    I32 capacity_;
+    I32 first_;
+    I32 last_;
+    I32 length_;
     TItem* data_;
     void Initialize();
     void Cleanup();
-    void Resize(int new_capacity);
+    void Resize(I32 new_capacity);
 };
 
 template <typename TItem>
@@ -52,7 +54,7 @@ inline Queue<TItem>::Queue()
 }
 
 template <typename TItem>
-inline Queue<TItem>::Queue(int capacity)
+inline Queue<TItem>::Queue(I32 capacity)
     : capacity_(capacity) {
   Initialize();
 }
@@ -63,24 +65,24 @@ inline Queue<TItem>::~Queue() {
 }
 
 template <typename TItem>
-inline int Queue<TItem>::capacity() const {
+inline I32 Queue<TItem>::capacity() const {
   return capacity_;
 }
 
 template <typename TItem>
-inline int Queue<TItem>::length() const {
+inline I32 Queue<TItem>::length() const {
   return length_;
 }
 
 template <typename TItem>
-inline bool Queue<TItem>::IsEmpty() const {
+inline BOOL Queue<TItem>::IsEmpty() const {
   return length_ == 0;
 }
 
 template <typename TItem>
 inline void Queue<TItem>::Push(TItem item) {
   if (length_ == capacity_) {
-    int new_capacity = 2 * capacity_ + 1;
+    I32 new_capacity = 2 * capacity_ + 1;
     Resize(new_capacity);
   }
   if (length_ == 0) {
@@ -130,9 +132,9 @@ inline void Queue<TItem>::Cleanup() {
 }
 
 template <typename TItem>
-inline void Queue<TItem>::Resize(int new_capacity) {
+inline void Queue<TItem>::Resize(I32 new_capacity) {
   TItem* new_data = new TItem[new_capacity];
-  for (int i = 0; i < length_; ++i) {
+  for (I32 i = 0; i < length_; ++i) {
     new_data[i] = data_[((first_ + i) % capacity_)];
   }
   Cleanup();
@@ -153,13 +155,13 @@ inline Queue<TItem>::Iterator::~Iterator() {
 }
 
 template <typename TItem>
-inline bool Queue<TItem>::Iterator::HasNext() const {
+inline BOOL Queue<TItem>::Iterator::HasNext() const {
   return position_ < queue_.length();
 }
 
 template <typename TItem>
 inline TItem Queue<TItem>::Iterator::Next() {
-  int index = (queue_.first_ + position_) % queue_.capacity_;
+  I32 index = (queue_.first_ + position_) % queue_.capacity_;
   position_++;
   return queue_.data_[index];
 }

@@ -6,10 +6,10 @@
 
 using namespace dwarf;
 
-void print(PriorityQueue<int>& pqueue) {
+void print(PriorityQueue<I32>& pqueue) {
 #ifdef DEBUG
   printf("Priority Queue: ");
-  PriorityQueue<int>::Iterator iterator(pqueue);
+  PriorityQueue<I32>::Iterator iterator(pqueue);
   while (iterator.HasNext()) {
     int item = iterator.Next();
     printf("%i ", item);
@@ -20,7 +20,7 @@ void print(PriorityQueue<int>& pqueue) {
 
 TEST(should_push_items_to_priority_queue) {
 
-  PriorityQueue<int>* pqueue = new PriorityQueue<int>();
+  PriorityQueue<I32>* pqueue = new PriorityQueue<I32>();
 
   pqueue->Push(1);
   print(*pqueue);

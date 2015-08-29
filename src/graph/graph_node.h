@@ -1,24 +1,26 @@
 #ifndef DWARF_GRAPH_GRAPH_NIDE_H_
 #define DWARF_GRAPH_GRAPH_NIDE_H_
 
+#include "dwarf.h"
+
 namespace dwarf {
 
 class GraphNode {
   public:
-    GraphNode(int index);
+    GraphNode(I32 index);
     virtual ~GraphNode();
-    int index() const;
+    I32 index() const;
 
   private:
-    int index_;
+    I32 index_;
 };
 
-inline GraphNode::GraphNode(int index)
+inline GraphNode::GraphNode(I32 index)
     : index_(index) {}
 
 inline GraphNode::~GraphNode() {}
 
-inline int GraphNode::index() const {
+inline I32 GraphNode::index() const {
   return index_;
 }
 

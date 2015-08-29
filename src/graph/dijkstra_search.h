@@ -1,6 +1,7 @@
 #ifndef DWARF_GRAPH_DIJKSTRA_SEARCH_H_
 #define DWARF_GRAPH_DIJKSTRA_SEARCH_H_
 
+#include "dwarf.h"
 #include "graph_search.h"
 #include "list.h"
 #include "indexed_priority_queue.h"
@@ -12,9 +13,9 @@ class DijkstraSearch : public GraphSearch {
   public:
     DijkstraSearch(const TGraph& graph);
     virtual ~DijkstraSearch();
-    virtual bool Find();
-    virtual const List<int>& GetPath() const;
-    virtual double GetCostToTarget() const;
+    virtual BOOL Find();
+    virtual const List<I32>& GetPath() const;
+    virtual F32 GetCostToTarget() const;
     virtual void Clear();
 
   private:
@@ -22,10 +23,10 @@ class DijkstraSearch : public GraphSearch {
     typedef typename TGraph::EdgeType Edge;
     typedef typename TGraph::EdgeIterator GraphEdgeIterator;
     const TGraph& graph_;
-    List<double>* cost_to_node_;
+    List<F32>* cost_to_node_;
     List<Edge*>* search_frontier_;
     List<Edge*>* shortest_path_tree_;
-    List<int>* path_;
+    List<I32>* path_;
     void Initialize();
     void Cleanup();
 };
@@ -42,11 +43,11 @@ inline DijkstraSearch<TGraph>::~DijkstraSearch() {
 }
 
 template <typename TGraph>
-inline bool DijkstraSearch<TGraph>::Find() {
-  IndexedPriorityQueue<double> queue(graph_.NodeCount());
+inline BOOL DijkstraSearch<TGraph>::Find() {
+  IndexedPriorityQueue<F32> queue(graph_.NodeCount());
   queue.Push(source(), 0);
   while(!queue.IsEmpty()) {
-    int next_closest_node = queue.Pop();
+    I32 next_closest_node = queue.Pop();
     shortest_path_tree_->Set(next_closest_node, search_frontier_->Get(next_closest_node));
     if (next_closest_node == target()) {
       set_found(true);
@@ -55,7 +56,7 @@ inline bool DijkstraSearch<TGraph>::Find() {
     GraphEdgeIterator edgeIterator(graph_, next_closest_node);
     while (edgeIterator.HasNext()) {
       Edge& edge = edgeIterator.Next();
-      double cost = cost_to_node_->Get(next_closest_node) + edge.cost();
+      F32 cost = cost_to_node_->Get(next_closest_node) + edge.cost();
       if (search_frontier_->Get(edge.to()) == NULL) {
         cost_to_node_->Set(edge.to(), cost);
         queue.Push(edge.to(), cost);
@@ -70,7 +71,7 @@ inline bool DijkstraSearch<TGraph>::Find() {
     }
   }
   if (found()) {
-    int index = target();
+    I32 index = target();
     path_->Add(index);
     while (index != source() && shortest_path_tree_->Get(index) != NULL) {
       index = shortest_path_tree_->Get(index)->from();
@@ -81,12 +82,12 @@ inline bool DijkstraSearch<TGraph>::Find() {
 }
 
 template <typename TGraph>
-inline const List<int>& DijkstraSearch<TGraph>::GetPath() const {
+inline const List<I32>& DijkstraSearch<TGraph>::GetPath() const {
   return *path_;
 }
 
 template <typename TGraph>
-inline double DijkstraSearch<TGraph>::GetCostToTarget() const {
+inline F32 DijkstraSearch<TGraph>::GetCostToTarget() const {
   return cost_to_node_->Get(target());
 }
 
@@ -99,18 +100,18 @@ inline void DijkstraSearch<TGraph>::Clear() {
 
 template <typename TGraph>
 inline void DijkstraSearch<TGraph>::Initialize() {
-  int nodeCount = graph_.NodeCount();
-  path_ = new List<int>(nodeCount);
-  cost_to_node_ = new List<double>(nodeCount);
-  for (int i = 0; i < nodeCount; i++) {
+  I32 nodeCount = graph_.NodeCount();
+  path_ = new List<I32>(nodeCount);
+  cost_to_node_ = new List<F32>(nodeCount);
+  for (I32 i = 0; i < nodeCount; i++) {
     cost_to_node_->Add(0);
   }
   search_frontier_ = new List<Edge*>();
-  for (int i = 0; i < nodeCount; i++) {
+  for (I32 i = 0; i < nodeCount; i++) {
     search_frontier_->Add(NULL);
   }
   shortest_path_tree_ = new List<Edge*>();
-  for (int i = 0; i < nodeCount; i++) {
+  for (I32 i = 0; i < nodeCount; i++) {
     shortest_path_tree_->Add(NULL);
   }
 }

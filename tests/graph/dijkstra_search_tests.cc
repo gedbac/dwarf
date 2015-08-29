@@ -9,8 +9,8 @@ using namespace dwarf;
 void print(DijkstraSearch<Graph<GraphNode,GraphEdge> >& ds) {
 #ifdef DEBUG
   printf("DS: ");
-  const List<int>& path = ds.GetPath();
-  List<int>::Iterator iterator(path);
+  const List<I32>& path = ds.GetPath();
+  List<I32>::Iterator iterator(path);
   while (iterator.HasNext()) {
     printf("%i ", iterator.Next());
   }
@@ -29,14 +29,14 @@ TEST(should_find_path_using_dijkstra_search) {
   graph->CreateNode(4);
   graph->CreateNode(5);
 
-  graph->CreateEdge(0, 4, 2.9);
-  graph->CreateEdge(0, 5, 1.0);
-  graph->CreateEdge(1, 2, 3.1);
-  graph->CreateEdge(2, 4, 0.8);
-  graph->CreateEdge(3, 2, 3.7);
-  graph->CreateEdge(4, 1, 1.9);
-  graph->CreateEdge(4, 5, 3.0);
-  graph->CreateEdge(5, 3, 1.1);
+  graph->CreateEdge(0, 4, 2.9f);
+  graph->CreateEdge(0, 5, 1.0f);
+  graph->CreateEdge(1, 2, 3.1f);
+  graph->CreateEdge(2, 4, 0.8f);
+  graph->CreateEdge(3, 2, 3.7f);
+  graph->CreateEdge(4, 1, 1.9f);
+  graph->CreateEdge(4, 5, 3.0f);
+  graph->CreateEdge(5, 3, 1.1f);
 
   DijkstraSearch<Graph<GraphNode,GraphEdge> >* search = new DijkstraSearch<Graph<GraphNode,GraphEdge> >(*graph);
 
@@ -48,7 +48,7 @@ TEST(should_find_path_using_dijkstra_search) {
   }
 
   ASSERT(search->found());
-  ASSERT((search->GetCostToTarget() == 5.0));
+  ASSERT((search->GetCostToTarget() == 5.0f));
 
   delete search;
   delete graph;

@@ -6,10 +6,10 @@
 
 using namespace dwarf;
 
-void print(List<int>& list) {
+void print(List<I32>& list) {
 #ifdef DEBUG
   printf("List: ");
-  List<int>::Iterator iterator(list);
+  List<I32>::Iterator iterator(list);
   while (iterator.HasNext()) {
     int item = iterator.Next();
     printf("%i ", item);
@@ -20,7 +20,7 @@ void print(List<int>& list) {
 
 TEST(should_add_items_to_list) {
 
-  List<int>* list = new List<int>();
+  List<I32>* list = new List<I32>();
 
   list->Add(1);
   list->Add(2);

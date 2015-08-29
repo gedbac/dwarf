@@ -6,10 +6,10 @@
 
 using namespace dwarf;
 
-void print(Stack<int>& stack) {
+void print(Stack<I32>& stack) {
 #ifdef DEBUG
   printf("Stack: ");
-  Stack<int>::Iterator iterator(stack);
+  Stack<I32>::Iterator iterator(stack);
   while (iterator.HasNext()) {
     int item = iterator.Next();
     printf("%i ", item);
@@ -20,7 +20,7 @@ void print(Stack<int>& stack) {
 
 TEST(should_push_items_to_stack) {
 
-  Stack<int>* stack = new Stack<int>();
+  Stack<I32>* stack = new Stack<I32>();
 
   stack->Push(1);
   stack->Push(2);

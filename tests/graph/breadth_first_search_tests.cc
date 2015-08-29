@@ -9,8 +9,8 @@ using namespace dwarf;
 void print(BreadthFirstSearch<Graph<GraphNode,GraphEdge> >& bfs) {
 #ifdef DEBUG
   printf("BFS: ");
-  const List<int>& path = bfs.GetPath();
-  List<int>::Iterator iterator(path);
+  const List<I32>& path = bfs.GetPath();
+  List<I32>::Iterator iterator(path);
   while (iterator.HasNext()) {
     printf("%i ", iterator.Next());
   }

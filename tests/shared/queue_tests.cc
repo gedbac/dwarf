@@ -6,10 +6,10 @@
 
 using namespace dwarf;
 
-void print(Queue<int>& queue) {
+void print(Queue<I32>& queue) {
 #ifdef DEBUG
   printf("Queue: ");
-  Queue<int>::Iterator iterator(queue);
+  Queue<I32>::Iterator iterator(queue);
   while (iterator.HasNext()) {
     int item = iterator.Next();
     printf("%i ", item);
@@ -20,7 +20,7 @@ void print(Queue<int>& queue) {
 
 TEST(should_push_items_to_queue) {
 
-  Queue<int>* queue = new Queue<int>();
+  Queue<I32>* queue = new Queue<I32>();
 
   queue->Push(1);
   queue->Push(2);

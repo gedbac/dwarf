@@ -3,6 +3,7 @@
 
 #include <math.h>
 
+#include "dwarf.h"
 #include "astar_heuristic.h"
 #include "navigation_graph_node.h"
 
@@ -13,7 +14,7 @@ class EuclidHeuristic : public AStarHeuristic<TNavigationGraph> {
   public:
     EuclidHeuristic(const TNavigationGraph& graph);
     ~EuclidHeuristic();
-    virtual double Calculate(int from, int to);
+    virtual F32 Calculate(I32 from, I32 to);
 
   private:
     typedef typename TNavigationGraph::NodeType Node;
@@ -28,12 +29,12 @@ template <typename TNavigationGraph>
 inline EuclidHeuristic<TNavigationGraph>::~EuclidHeuristic() {}
 
 template <typename TNavigationGraph>
-inline double EuclidHeuristic<TNavigationGraph>::Calculate(int from, int to) {
+inline F32 EuclidHeuristic<TNavigationGraph>::Calculate(I32 from, I32 to) {
   const TNavigationGraph& graph = AStarHeuristic<TNavigationGraph>::graph();
   Node& node1 = graph.GetNode(from);
   Node& node2 = graph.GetNode(to);
-  double diff1 = node2.position().x - node1.position().x;
-  double diff2 = node2.position().y - node1.position().y;
+  F32 diff1 = node2.position().x - node1.position().x;
+  F32 diff2 = node2.position().y - node1.position().y;
   return sqrt(diff1*diff1 + diff2*diff2);
 }
 

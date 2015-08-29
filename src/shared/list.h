@@ -1,6 +1,8 @@
 #ifndef DWARF_SHARED_LIST_H_
 #define DWARF_SHARED_LIST_H_
 
+#include "dwarf.h"
+
 namespace dwarf {
 
 #include <string.h>
@@ -11,42 +13,42 @@ class List {
   public:
     typedef TItem ItemType;
     List();
-    List(int capacity);
+    List(I32 capacity);
     ~List();
-    int capacity() const;
-    int length() const;
-    bool IsEmpty() const;
-    TItem Get(int index) const;
-    void Set(int index, TItem item);
+    I32 capacity() const;
+    I32 length() const;
+    BOOL IsEmpty() const;
+    TItem Get(I32 index) const;
+    void Set(I32 index, TItem item);
     void Add(TItem item);
-    bool Contains(TItem item) const;
-    int IndexOf(TItem item) const;
-    bool Remove(TItem item);
-    void Insert(int index, TItem item);
+    BOOL Contains(TItem item) const;
+    I32 IndexOf(TItem item) const;
+    BOOL Remove(TItem item);
+    void Insert(I32 index, TItem item);
     void Clear();
-    TItem& operator[] (int index) const;
+    TItem& operator[] (I32 index) const;
 
     class Iterator {
       public:
         Iterator(const List<TItem>& list);
         ~Iterator();
-        bool HasNext() const;
+        BOOL HasNext() const;
         TItem Next();
 
       private:
-        int position_;
+        I32 position_;
         const List<TItem>& list_;
     };
 
     friend class Iterator;
 
   private:
-    int capacity_;
-    int length_;
+    I32 capacity_;
+    I32 length_;
     TItem* data_;
     void Initialize();
     void Cleanup();
-    void Resize(int new_capacity);
+    void Resize(I32 new_capacity);
 };
 
 template <typename TItem>
@@ -56,7 +58,7 @@ inline List<TItem>::List()
 }
 
 template <typename TItem>
-inline List<TItem>::List(int capacity)
+inline List<TItem>::List(I32 capacity)
     : capacity_(capacity) {
   Initialize();
 }
@@ -67,28 +69,28 @@ inline List<TItem>::~List() {
 }
 
 template <typename TItem>
-inline int List<TItem>::capacity() const {
+inline I32 List<TItem>::capacity() const {
   return capacity_;
 }
 
 template <typename TItem>
-inline int List<TItem>::length() const {
+inline I32 List<TItem>::length() const {
   return length_;
 }
 
 template <typename TItem>
-inline bool List<TItem>::IsEmpty() const {
+inline BOOL List<TItem>::IsEmpty() const {
   return length_ == 0;
 }
 
 template <typename TItem>
-inline TItem List<TItem>::Get(int index) const {
+inline TItem List<TItem>::Get(I32 index) const {
   assert(index >= 0 && index < length_ && "index out of range");
   return data_[index];
 }
 
 template <typename TItem>
-inline void List<TItem>::Set(int index, TItem item) {
+inline void List<TItem>::Set(I32 index, TItem item) {
   assert(index >= 0 && index < length_ && "index out of range");
   data_[index] = item;
 }
@@ -96,15 +98,15 @@ inline void List<TItem>::Set(int index, TItem item) {
 template <typename TItem>
 inline void List<TItem>::Add(TItem item) {
   if (length_ == capacity_) {
-    int new_capacity = 2 * capacity_ + 1;
+    I32 new_capacity = 2 * capacity_ + 1;
     Resize(new_capacity);
   }
   data_[length_++] = item;
 }
 
 template <typename TItem>
-inline bool List<TItem>::Contains(TItem item) const {
-  for (int i = 0; i < length_; ++i) {
+inline BOOL List<TItem>::Contains(TItem item) const {
+  for (I32 i = 0; i < length_; ++i) {
     if (data_[i] == item) {
       return true;
     }
@@ -113,8 +115,8 @@ inline bool List<TItem>::Contains(TItem item) const {
 }
 
 template <typename TItem>
-inline int List<TItem>::IndexOf(TItem item) const {
-  for (int i = 0; i < length_; ++i) {
+inline I32 List<TItem>::IndexOf(TItem item) const {
+  for (I32 i = 0; i < length_; ++i) {
     if (data_[i] == item) {
       return i;
     }
@@ -123,8 +125,8 @@ inline int List<TItem>::IndexOf(TItem item) const {
 }
 
 template <typename TItem>
-inline bool List<TItem>::Remove(TItem item) {
-  int index = IndexOf(item);
+inline BOOL List<TItem>::Remove(TItem item) {
+  I32 index = IndexOf(item);
   if (index != -1) {
     length_--;
     while (index < length_) {
@@ -137,10 +139,10 @@ inline bool List<TItem>::Remove(TItem item) {
 }
 
 template <typename TItem>
-inline void List<TItem>::Insert(int index, TItem item) {
+inline void List<TItem>::Insert(I32 index, TItem item) {
   assert(index >= 0 && index <= length_ && "index out of range");
   Add(item);
-  for (int i = length_ - 1; i > index; --i) {
+  for (I32 i = length_ - 1; i > index; --i) {
     data_[i] = data_[i - 1];
   }
   data_[index] = item;
@@ -153,7 +155,7 @@ inline void List<TItem>::Clear() {
 }
 
 template <typename TItem>
-inline TItem& List<TItem>::operator[] (int index) const {
+inline TItem& List<TItem>::operator[] (I32 index) const {
   assert(index >= 0 && index < length_ && "index out of range");
   return data_[index];
 }
@@ -170,7 +172,7 @@ inline void List<TItem>::Cleanup() {
 }
 
 template <typename TItem>
-inline void List<TItem>::Resize(int new_capacity) {
+inline void List<TItem>::Resize(I32 new_capacity) {
   TItem* new_data = new TItem[new_capacity];
   memcpy(new_data, data_, capacity_ * sizeof(TItem));
   Cleanup();
@@ -189,7 +191,7 @@ inline List<TItem>::Iterator::~Iterator() {
 }
 
 template <typename TItem>
-inline bool List<TItem>::Iterator::HasNext() const {
+inline BOOL List<TItem>::Iterator::HasNext() const {
   return position_ < list_.length();
 }
 

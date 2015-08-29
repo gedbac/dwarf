@@ -1,6 +1,8 @@
 #ifndef DWARF_GRAPH_ASTAR_HEURISTIC_H_
 #define DWARF_GRAPH_ASTAR_HEURISTIC_H_
 
+#include "dwarf.h"
+
 namespace dwarf {
 
 template <typename TGraph>
@@ -8,7 +10,7 @@ class AStarHeuristic {
   public:
     AStarHeuristic(const TGraph& graph);
     virtual ~AStarHeuristic();
-    virtual double Calculate(int from, int to);
+    virtual F32 Calculate(I32 from, I32 to);
 
   protected:
     const TGraph& graph() const;
@@ -30,7 +32,7 @@ inline const TGraph& AStarHeuristic<TGraph>::graph() const {
 }
 
 template <typename TGraph>
-inline double AStarHeuristic<TGraph>::Calculate(int from, int to) {
+inline F32 AStarHeuristic<TGraph>::Calculate(I32 from, I32 to) {
   return 0;
 }
 
