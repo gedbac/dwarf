@@ -6,7 +6,7 @@ CC = g++
 #   -g       - produce debugging information
 #   -O0      - reduce compilation time and make debugging produce the expected results
 #   -D name  - predefine name as a macro
-CFLAGS = -Wall -g -O0 -D DEBUG
+CFLAGS = -Wall -g -O0 -D DEBUG -D OSX
 
 # List of modules
 MODULES = shared graph
@@ -17,7 +17,7 @@ BUILD_DIR = $(addprefix obj/,$(MODULES)) bin
 
 SRC = $(foreach sdir,$(SRC_DIR),$(wildcard $(sdir)/*.cc))
 OBJ = $(patsubst src/%.cc,obj/%.o,$(SRC))
-INCLUDES = $(addprefix -I ,$(SRC_DIR))
+INCLUDES = -I src $(addprefix -I ,$(SRC_DIR))
 
 vpath %.cc $(SRC_DIR)
 
@@ -34,7 +34,7 @@ bin/dwarf: $(OBJ)
 	$(CC) $(CFLAGS) $(INCLUDES) $^ src/dwarf.cc -o $@
 
 bin/test_runner: $(OBJ)
-	$(CC) $(CFLAGS) $(INCLUDES) -Itests $^ tests/test_runner.cc -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -I tests $^ tests/test_runner.cc -o $@
 
 checkdirs: $(BUILD_DIR)
 

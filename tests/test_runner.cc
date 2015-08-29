@@ -8,6 +8,7 @@
 #include "shared/queue_tests.cc"
 #include "shared/priority_queue_tests.cc"
 #include "shared/indexed_priority_queue_tests.cc"
+#include "shared/clock_tests.cc"
 #include "graph/graph_tests.cc"
 #include "graph/deep_first_search_tests.cc"
 #include "graph/breadth_first_search_tests.cc"
