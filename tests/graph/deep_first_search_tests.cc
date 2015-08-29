@@ -8,13 +8,13 @@ using namespace dwarf;
 
 void print(DeepFirstSearch<Graph<GraphNode,GraphEdge> >& dfs) {
 #ifdef DEBUG
-    printf("DFS: ");
-    const List<int>& path = dfs.GetPath();
-    List<int>::Iterator iterator(path);
-    while (iterator.HasNext()) {
-      printf("%i ", iterator.Next());
-    }
-    printf("\n");
+  printf("DFS: ");
+  const List<int>& path = dfs.GetPath();
+  List<int>::Iterator iterator(path);
+  while (iterator.HasNext()) {
+    printf("%i ", iterator.Next());
+  }
+  printf("\n");
 #endif
 }
 

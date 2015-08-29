@@ -6,9 +6,9 @@ namespace dwarf {
 template <typename TGraph>
 class AStarHeuristic {
   public:
-  	AStarHeuristic(const TGraph& graph);
+    AStarHeuristic(const TGraph& graph);
     virtual ~AStarHeuristic();
-	  virtual double Calculate(int from, int to);
+    virtual double Calculate(int from, int to);
 
   protected:
     const TGraph& graph() const;
@@ -19,7 +19,7 @@ class AStarHeuristic {
 
 template <typename TGraph>
 inline AStarHeuristic<TGraph>::AStarHeuristic(const TGraph& graph)
-	: graph_(graph) {}
+    : graph_(graph) {}
 
 template <typename TGraph>
 inline AStarHeuristic<TGraph>::~AStarHeuristic() {}

@@ -11,8 +11,8 @@ class NavigationGraphNode : public GraphNode {
   public:
     NavigationGraphNode(int index);
     NavigationGraphNode(int index, Point position);
-	  virtual ~NavigationGraphNode();
-	  Point position() const;
+    virtual ~NavigationGraphNode();
+    Point position() const;
     void set_position(Point position);
     TExtraInfo extra_info() const;
     void set_extra_info(TExtraInfo extraInfo);

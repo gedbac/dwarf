@@ -11,9 +11,9 @@ namespace dwarf {
 template <typename TNavigationGraph>
 class ManhattanHeuristic : public AStarHeuristic<TNavigationGraph> {
   public:
-  	ManhattanHeuristic(const TNavigationGraph& graph);
-	  ~ManhattanHeuristic();
-	  virtual double Calculate(int from, int to);
+    ManhattanHeuristic(const TNavigationGraph& graph);
+    ~ManhattanHeuristic();
+    virtual double Calculate(int from, int to);
 
   private:
     typedef typename TNavigationGraph::NodeType Node;
@@ -22,7 +22,7 @@ class ManhattanHeuristic : public AStarHeuristic<TNavigationGraph> {
 
 template <typename TNavigationGraph>
 inline ManhattanHeuristic<TNavigationGraph>::ManhattanHeuristic(const TNavigationGraph& graph)
-	: AStarHeuristic<TNavigationGraph>(graph) {}
+    : AStarHeuristic<TNavigationGraph>(graph) {}
 
 template <typename TNavigationGraph>
 inline ManhattanHeuristic<TNavigationGraph>::~ManhattanHeuristic() {}

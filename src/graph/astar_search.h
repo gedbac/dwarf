@@ -11,9 +11,9 @@ template <typename TGraph, typename THeuristic>
 class AStarSearch : public GraphSearch {
   public:
     AStarSearch(const TGraph& graph, THeuristic& heuristic);
-	  virtual ~AStarSearch();
-	  virtual bool Find();
-	  virtual const List<int>& GetPath() const;
+    virtual ~AStarSearch();
+    virtual bool Find();
+    virtual const List<int>& GetPath() const;
     virtual double GetCostToTarget() const;
     virtual void Clear();
 
@@ -21,7 +21,7 @@ class AStarSearch : public GraphSearch {
     typedef typename TGraph::NodeType Node;
     typedef typename TGraph::EdgeType Edge;
     typedef typename TGraph::EdgeIterator GraphEdgeIterator;
-	  const TGraph& graph_;
+    const TGraph& graph_;
     THeuristic& heuristic_;
     List<double>* cost_to_node_;
     List<Edge*>* search_frontier_;

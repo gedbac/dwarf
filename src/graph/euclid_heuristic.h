@@ -11,9 +11,9 @@ namespace dwarf {
 template <typename TNavigationGraph>
 class EuclidHeuristic : public AStarHeuristic<TNavigationGraph> {
   public:
-  	EuclidHeuristic(const TNavigationGraph& graph);
-	  ~EuclidHeuristic();
-	  virtual double Calculate(int from, int to);
+    EuclidHeuristic(const TNavigationGraph& graph);
+    ~EuclidHeuristic();
+    virtual double Calculate(int from, int to);
 
   private:
     typedef typename TNavigationGraph::NodeType Node;
@@ -22,7 +22,7 @@ class EuclidHeuristic : public AStarHeuristic<TNavigationGraph> {
 
 template <typename TNavigationGraph>
 inline EuclidHeuristic<TNavigationGraph>::EuclidHeuristic(const TNavigationGraph& graph)
-	: AStarHeuristic<TNavigationGraph>(graph) {}
+    : AStarHeuristic<TNavigationGraph>(graph) {}
 
 template <typename TNavigationGraph>
 inline EuclidHeuristic<TNavigationGraph>::~EuclidHeuristic() {}

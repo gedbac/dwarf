@@ -18,8 +18,8 @@ class GraphSearch {
     virtual void Clear();
 
   protected:
-  	GraphSearch();
-  	virtual void set_found(bool found);
+    GraphSearch();
+    virtual void set_found(bool found);
 
   private:
     bool found_;

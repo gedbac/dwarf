@@ -10,7 +10,7 @@ template <typename TGraph>
 class BreadthFirstSearch : public GraphSearch {
   public:
     BreadthFirstSearch(const TGraph& graph);
-	  virtual ~BreadthFirstSearch();
+    virtual ~BreadthFirstSearch();
     virtual bool Find();
     virtual const List<int>& GetPath() const;
     virtual void Clear();
@@ -20,7 +20,7 @@ class BreadthFirstSearch : public GraphSearch {
     typedef typename TGraph::EdgeType Edge;
     typedef typename TGraph::EdgeIterator GraphEdgeIterator;
     enum { VISITED, UNVISITED, NO_PARENT_ASSIGNED };
-	  const TGraph& graph_;
+    const TGraph& graph_;
     List<int>* visited_;
     List<int>* route_;
     List<int>* path_;

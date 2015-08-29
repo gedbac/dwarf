@@ -11,7 +11,7 @@ template <typename TGraph>
 class DijkstraSearch : public GraphSearch {
   public:
     DijkstraSearch(const TGraph& graph);
-	  virtual ~DijkstraSearch();
+    virtual ~DijkstraSearch();
     virtual bool Find();
     virtual const List<int>& GetPath() const;
     virtual double GetCostToTarget() const;
@@ -21,7 +21,7 @@ class DijkstraSearch : public GraphSearch {
     typedef typename TGraph::NodeType Node;
     typedef typename TGraph::EdgeType Edge;
     typedef typename TGraph::EdgeIterator GraphEdgeIterator;
-	  const TGraph& graph_;
+    const TGraph& graph_;
     List<double>* cost_to_node_;
     List<Edge*>* search_frontier_;
     List<Edge*>* shortest_path_tree_;

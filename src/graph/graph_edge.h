@@ -10,19 +10,19 @@ class GraphEdge {
     virtual ~GraphEdge();
     int from() const;
     int to() const;
-	  double cost() const;
+    double cost() const;
     void set_cost(double cost);
 
   private:
     int from_;
     int to_;
-	  double cost_;
+    double cost_;
 };
 
 inline GraphEdge::GraphEdge(int from, int to)
     : from_(from),
       to_(to),
-	    cost_(1.0) {}
+      cost_(1.0) {}
 
 inline GraphEdge::GraphEdge(int from, int to, double cost)
     : from_(from),

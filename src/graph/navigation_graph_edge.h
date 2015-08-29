@@ -8,9 +8,9 @@ namespace dwarf {
 template <typename TExtraInfo = void*>
 class NavigationGraphEdge : public GraphEdge {
   public:
-  	NavigationGraphEdge(int from, int to);
+    NavigationGraphEdge(int from, int to);
     NavigationGraphEdge(int from, int to, double cost);
-	  ~NavigationGraphEdge();
+    ~NavigationGraphEdge();
     TExtraInfo extra_info() const;
     void set_extra_info(TExtraInfo extraInfo);
 
