@@ -1,8 +1,8 @@
 #include "unit_tests.h"
-#include "deep_first_search.h"
-#include "graph.h"
-#include "graph_node.h"
-#include "graph_edge.h"
+#include "graph/deep_first_search.h"
+#include "graph/graph.h"
+#include "graph/graph_node.h"
+#include "graph/graph_edge.h"
 
 using namespace dwarf;
 

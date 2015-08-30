@@ -1,8 +1,8 @@
-#include "navigation_graph_node.h"
-#include "navigation_graph_edge.h"
-#include "navigation_graph.h"
-#include "euclid_heuristic.h"
-#include "point.h"
+#include "shared/point.h"
+#include "graph/navigation_graph_node.h"
+#include "graph/navigation_graph_edge.h"
+#include "graph/navigation_graph.h"
+#include "graph/euclid_heuristic.h"
 
 using namespace dwarf;
 

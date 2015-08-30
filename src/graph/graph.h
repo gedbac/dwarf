@@ -2,7 +2,7 @@
 #define DWARF_GRAPH_GRAPH_H_
 
 #include "dwarf.h"
-#include "list.h"
+#include "shared/list.h"
 
 namespace dwarf {
 

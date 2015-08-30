@@ -2,9 +2,9 @@
 #define DWARF_GRAPH_DIJKSTRA_SEARCH_H_
 
 #include "dwarf.h"
-#include "graph_search.h"
-#include "list.h"
-#include "indexed_priority_queue.h"
+#include "shared/list.h"
+#include "shared/indexed_priority_queue.h"
+#include "graph/graph_search.h"
 
 namespace dwarf {
 
@@ -14,8 +14,8 @@ class DijkstraSearch : public GraphSearch {
     DijkstraSearch(const TGraph& graph);
     virtual ~DijkstraSearch();
     virtual BOOL Find();
-    virtual const List<I32>& GetPath() const;
-    virtual F32 GetCostToTarget() const;
+    virtual const List<I32>& GetPath();
+    virtual F32 GetCostToTarget();
     virtual void Clear();
 
   private:
@@ -82,12 +82,12 @@ inline BOOL DijkstraSearch<TGraph>::Find() {
 }
 
 template <typename TGraph>
-inline const List<I32>& DijkstraSearch<TGraph>::GetPath() const {
+inline const List<I32>& DijkstraSearch<TGraph>::GetPath() {
   return *path_;
 }
 
 template <typename TGraph>
-inline F32 DijkstraSearch<TGraph>::GetCostToTarget() const {
+inline F32 DijkstraSearch<TGraph>::GetCostToTarget() {
   return cost_to_node_->Get(target());
 }
 

@@ -4,8 +4,8 @@
 #include <math.h>
 
 #include "dwarf.h"
-#include "astar_heuristic.h"
-#include "navigation_graph_node.h"
+#include "graph/astar_heuristic.h"
+#include "graph/navigation_graph_node.h"
 
 namespace dwarf {
 

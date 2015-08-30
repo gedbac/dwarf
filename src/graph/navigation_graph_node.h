@@ -2,8 +2,8 @@
 #define DWARF_GRAPH_NAVIGATION_GRAPH_NODE_H_
 
 #include "dwarf.h"
-#include "graph_node.h"
-#include "point.h"
+#include "shared/point.h"
+#include "graph/graph_node.h"
 
 namespace dwarf {
 

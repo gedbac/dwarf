@@ -2,7 +2,7 @@
 #define DWARF_SHARED_PRIORITY_QUEUE_H_
 
 #include "dwarf.h"
-#include "comparer.h"
+#include "shared/comparer.h"
 
 namespace dwarf {
 

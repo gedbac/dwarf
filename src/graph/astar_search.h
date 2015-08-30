@@ -2,9 +2,9 @@
 #define	DWARF_GRAPH_ASTAR_SEARCH_H_
 
 #include "dwarf.h"
-#include "graph_search.h"
-#include "list.h"
-#include "indexed_priority_queue.h"
+#include "shared/list.h"
+#include "shared/indexed_priority_queue.h"
+#include "graph/graph_search.h"
 
 namespace dwarf {
 
@@ -14,8 +14,8 @@ class AStarSearch : public GraphSearch {
     AStarSearch(const TGraph& graph, THeuristic& heuristic);
     virtual ~AStarSearch();
     virtual BOOL Find();
-    virtual const List<I32>& GetPath() const;
-    virtual F32 GetCostToTarget() const;
+    virtual const List<I32>& GetPath();
+    virtual F32 GetCostToTarget();
     virtual void Clear();
 
   private:
@@ -85,12 +85,12 @@ inline BOOL AStarSearch<TGraph, THeuristic>::Find() {
 }
 
 template <typename TGraph, typename THeuristic>
-inline const List<I32>& AStarSearch<TGraph, THeuristic>::GetPath() const {
+inline const List<I32>& AStarSearch<TGraph, THeuristic>::GetPath() {
   return *path_;
 }
 
 template <typename TGraph, typename THeuristic>
-inline F32 AStarSearch<TGraph, THeuristic>::GetCostToTarget() const {
+inline F32 AStarSearch<TGraph, THeuristic>::GetCostToTarget() {
   return cost_to_node_->Get(target());
 }
 

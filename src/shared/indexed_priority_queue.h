@@ -6,7 +6,7 @@
 #include <math.h>
 
 #include "dwarf.h"
-#include "comparer.h"
+#include "shared/comparer.h"
 
 namespace dwarf {
 

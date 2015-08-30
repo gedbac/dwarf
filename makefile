@@ -9,7 +9,7 @@ CC = g++
 CFLAGS = -Wall -g -O0 -D DEBUG -D OSX
 
 # List of modules
-MODULES = shared graph
+MODULES = shared graph entities
 
 # Target definitions. "all" is the default.
 SRC_DIR = $(addprefix src/,$(MODULES))

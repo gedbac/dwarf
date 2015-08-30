@@ -2,7 +2,7 @@
 #define DWARF_GRAPH_GRAPH_SEARCH_H_
 
 #include "dwarf.h"
-#include "list.h"
+#include "shared/list.h"
 
 namespace dwarf {
 
@@ -15,7 +15,7 @@ class GraphSearch {
     virtual I32 target() const;
     virtual void set_target(I32 target);
     virtual BOOL Find() = 0;
-    virtual const List<I32>& GetPath() const = 0;
+    virtual const List<I32>& GetPath() = 0;
     virtual void Clear();
 
   protected:

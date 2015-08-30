@@ -2,9 +2,9 @@
 #define DWARF_GRAPH_DEEP_FIRST_SEARCH_H_
 
 #include "dwarf.h"
-#include "graph_search.h"
-#include "list.h"
-#include "stack.h"
+#include "shared/list.h"
+#include "shared/stack.h"
+#include "graph/graph_search.h"
 
 namespace dwarf {
 
@@ -14,7 +14,7 @@ class DeepFirstSearch : public GraphSearch {
   	DeepFirstSearch(const TGraph& graph);
     virtual ~DeepFirstSearch();
     virtual BOOL Find();
-    virtual const List<I32>& GetPath() const;
+    virtual const List<I32>& GetPath();
     virtual void Clear();
 
   private:
@@ -72,7 +72,7 @@ inline BOOL DeepFirstSearch<TGraph>::Find() {
 }
 
 template <typename TGraph>
-inline const List<I32>& DeepFirstSearch<TGraph>::GetPath() const {
+inline const List<I32>& DeepFirstSearch<TGraph>::GetPath() {
   return *path_;
 }
 

@@ -1,12 +1,12 @@
 #ifndef DWARF_SHARED_LIST_H_
 #define DWARF_SHARED_LIST_H_
 
+#include <string.h>
+#include <assert.h>
+
 #include "dwarf.h"
 
 namespace dwarf {
-
-#include <string.h>
-#include <assert.h>
 
 template <typename TItem>
 class List {

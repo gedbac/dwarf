@@ -2,8 +2,8 @@
 #define DWARF_GRAPH_BREADTH_FIRST_SEARCH_H_
 
 #include "dwarf.h"
-#include "list.h"
-#include "queue.h"
+#include "shared/list.h"
+#include "shared/queue.h"
 
 namespace dwarf {
 
@@ -13,7 +13,7 @@ class BreadthFirstSearch : public GraphSearch {
     BreadthFirstSearch(const TGraph& graph);
     virtual ~BreadthFirstSearch();
     virtual BOOL Find();
-    virtual const List<int>& GetPath() const;
+    virtual const List<int>& GetPath();
     virtual void Clear();
 
   private:
@@ -71,7 +71,7 @@ inline BOOL BreadthFirstSearch<TGraph>::Find() {
 }
 
 template <typename TGraph>
-inline const List<int>& BreadthFirstSearch<TGraph>::GetPath() const {
+inline const List<int>& BreadthFirstSearch<TGraph>::GetPath() {
   return *path_;
 }
 

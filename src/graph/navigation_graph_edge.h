@@ -2,7 +2,7 @@
 #define DWARF_GRAPH_NAVIGATION_GRAPH_EDGE_H_
 
 #include "dwarf.h"
-#include "graph_edge.h"
+#include "graph/graph_edge.h"
 
 namespace dwarf {
 

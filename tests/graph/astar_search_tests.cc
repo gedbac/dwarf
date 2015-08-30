@@ -1,9 +1,9 @@
 #include "unit_tests.h"
-#include "astar_search.h"
-#include "astar_heuristic.h"
-#include "graph.h"
-#include "graph_node.h"
-#include "graph_edge.h"
+#include "graph/astar_search.h"
+#include "graph/astar_heuristic.h"
+#include "graph/graph.h"
+#include "graph/graph_node.h"
+#include "graph/graph_edge.h"
 
 using namespace dwarf;
 
